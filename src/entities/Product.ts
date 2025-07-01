@@ -5,7 +5,7 @@ import { Category } from './Category';
 export class Product {
 
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   name: string;
