@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Category } from './Category';
+import { Inventory } from './Inventory';
 
 @Entity('products')
 export class Product {
@@ -21,5 +22,9 @@ export class Product {
 
   @ManyToOne(() => Category, category => category.products)
   @JoinColumn({ name: 'category_id' })
-  category: Category
+  category: Category;
+
+  @OneToOne(() => Inventory, (inventory) => inventory.product)
+  @JoinColumn({ name: 'id' })
+  inventory: Inventory;
 }
