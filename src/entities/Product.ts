@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Category } from './Category';
 import { Inventory } from './Inventory';
+import { Transaction } from './Transaction';
 
 @Entity('products')
 export class Product {
@@ -11,6 +12,9 @@ export class Product {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  description: string;
+
   @Column('decimal', { precision: 10, scale: 2 })
   price: string;
 
@@ -20,11 +24,14 @@ export class Product {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Category, category => category.products)
+  @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
   @OneToOne(() => Inventory, (inventory) => inventory.product)
   @JoinColumn({ name: 'id' })
   inventory: Inventory;
+
+  @OneToMany(() => Transaction, (transactions) => transactions.product)
+  transactions: Transaction[]
 }

@@ -11,5 +11,5 @@ export class Category {
   name: string;
 
   @OneToMany(() => Product, (product) => product.category)
-  products: Product[];
+  products: Product[];  
 }

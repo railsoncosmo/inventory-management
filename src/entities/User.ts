@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../shared/types/user.type';
+import { Transaction } from './Transaction';
 
 @Entity('users')
 export class User {
@@ -19,7 +20,7 @@ export class User {
   @Column()
   phone: number;
 
-  @Column()
+  @Column({ nullable: true })
   image_url: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER})
@@ -27,4 +28,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.user)
+    transactions: Transaction[];
 }
