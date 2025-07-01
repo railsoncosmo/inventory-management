@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Product } from '../entities/Product';
 
 @Entity('inventories')
@@ -17,6 +17,6 @@ export class Inventory {
   @Column()
   quantity: number;
 
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
 }
