@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('products')
 export class Product {
@@ -18,6 +18,6 @@ export class Product {
   @Column()
   image_url: string;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;;
 }
