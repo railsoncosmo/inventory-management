@@ -18,7 +18,7 @@ export class Product {
   @Column('decimal', { precision: 10, scale: 2 })
   price: string;
 
-  @Column()
+  @Column({ nullable: true })
   image_url: string;
 
   @CreateDateColumn()
