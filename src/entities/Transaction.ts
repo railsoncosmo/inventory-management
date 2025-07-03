@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { TypeTransaction } from '../shared/types/transaction.type';
+import { TypeTransaction } from '../shared/types/transaction';
 import { Product } from './Product';
 import { User } from './User';
 
