@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRole } from '../shared/types/roles';
 import { Transaction } from './Transaction';
+import { Product } from './Product';
 
 @Entity('users')
 export class User {
@@ -29,6 +30,9 @@ export class User {
   @CreateDateColumn()
   created_at: Date;
 
+  @OneToMany(() => Product, (product) => product.user)
+  products: Product[];
+
   @OneToMany(() => Transaction, (transaction) => transaction.user)
-    transactions: Transaction[];
+  transactions: Transaction[];
 }

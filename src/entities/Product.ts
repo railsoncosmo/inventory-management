@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, One
 import { Category } from './Category';
 import { Inventory } from './Inventory';
 import { Transaction } from './Transaction';
+import { User } from './User';
 
 @Entity('products')
 export class Product {
@@ -23,6 +24,10 @@ export class Product {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @ManyToOne(() => User, (user) => user.products)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: 'category_id' })
