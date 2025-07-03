@@ -1,14 +1,13 @@
 import express from 'express';
 import { AppDataSource } from './config/data-source';
+import { routes } from './routes';
 
 AppDataSource.initialize().then(() => {
   
   const app = express();
 
   app.use(express.json());
-  app.get('/teste', (req, res) => {
-    return res.json('tudo certo')
-  })
+  app.use('/v1', routes);
 
   app.listen(process.env.PORT, () => {
     console.log('Server Running!')
