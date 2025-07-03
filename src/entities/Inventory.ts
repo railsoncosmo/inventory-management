@@ -18,5 +18,5 @@ export class Inventory {
   quantity: number;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 }

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserRole } from '../shared/types/user.type';
+import { UserRole } from '../shared/types/roles';
 import { Transaction } from './Transaction';
 
 @Entity('users')
@@ -27,7 +27,7 @@ export class User {
   role: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
     transactions: Transaction[];

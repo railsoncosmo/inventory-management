@@ -19,7 +19,7 @@ export class Transaction {
   type: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @ManyToOne(() => Product, (product) => product.transactions)
   @JoinColumn({ name: 'product_id' })

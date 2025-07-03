@@ -11,7 +11,7 @@ export class Category {
   name: string;
 
   @CreateDateColumn()
-    createdAt: Date;
+  created_at: Date;
 
   @OneToMany(() => Product, (product) => product.category)
   products: Product[];
