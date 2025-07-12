@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/index.ts",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/config/data-source.ts migration:generate ./src/migrations/default",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/config/data-source.ts migration:run"
+    "typeorm": "node -r ts-node/register -r dotenv/config ./node_modules/typeorm/cli.js",
+    "migration:generate": "npm run typeorm -- -d ./src/config/data-source.ts migration:generate ./src/migrations/default",
+    "migration:run": "npm run typeorm -- -d ./src/config/data-source.ts migration:run"
   },
   "keywords": [],
   "author": "",
@@ -20,11 +21,12 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "dotenv": "^17.0.0",
+    "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.25"
+    "typeorm": "^0.3.25",
+    "zod": "^4.0.5"
   }
 }

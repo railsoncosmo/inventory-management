@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  inventory-pg:
+    image: postgres:15
+    container_name: inventory-pg
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: inventory
+    volumes:
+      - inventory_pg_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  inventory_pg_data:
+
+networks:
+  backend:
