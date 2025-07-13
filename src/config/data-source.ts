@@ -1,10 +1,10 @@
-import 'dotenv/config';
-import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { env } from '../env';
+import 'dotenv/config'
+import 'reflect-metadata'
+import { DataSource } from 'typeorm'
+import { env } from '../env'
 
 export const AppDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: env.DB_HOST,
   port: env.DB_PORT,
   username: env.DB_USER,

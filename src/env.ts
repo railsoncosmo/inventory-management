@@ -10,7 +10,7 @@ const envSchema = z.object({
   DB_NAME: z.string()
 })
 
-const _env = envSchema.safeParse(process.env);
+const _env = envSchema.safeParse(process.env)
 
 if(_env.success === false){
   console.log('Invalid environment variables!', _env.error.format())

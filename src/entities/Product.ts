@@ -1,42 +1,42 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Category } from './Category';
-import { Inventory } from './Inventory';
-import { Transaction } from './Transaction';
-import { User } from './User';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Category } from './Category'
+import { Inventory } from './Inventory'
+import { Transaction } from './Transaction'
+import { User } from './User'
 
 @Entity('products')
 export class Product {
 
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string
 
   @Column()
-  name: string;
+    name: string
 
   @Column({ nullable: true })
-  description: string;
+    description: string
 
   @Column('decimal', { precision: 10, scale: 2 })
-  price: string;
+    price: string
 
   @Column({ nullable: true })
-  image_url: string;
+    image_url: string
 
   @CreateDateColumn()
-  created_at: Date;
+    created_at: Date
 
   @ManyToOne(() => User, (user) => user.products)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+    user: User
 
   @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+    category: Category
 
   @OneToOne(() => Inventory, (inventory) => inventory.product)
   @JoinColumn({ name: 'id' })
-  inventory: Inventory;
+    inventory: Inventory
 
   @OneToMany(() => Transaction, (transactions) => transactions.product)
-  transactions: Transaction[]
+    transactions: Transaction[]
 }

@@ -1,38 +1,38 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { UserRole } from '../shared/types/roles';
-import { Transaction } from './Transaction';
-import { Product } from './Product';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { UserRole } from '../shared/types/roles'
+import { Transaction } from './Transaction'
+import { Product } from './Product'
 
 @Entity('users')
 export class User {
   
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+    id: string
 
   @Column()
-  name: string;
+    name: string
 
   @Column({ unique: true })
-  email: string;
+    email: string
 
   @Column()
-  password: string;
+    password: string
 
   @Column()
-  phone: number;
+    phone: number
 
   @Column({ nullable: true })
-  image_url: string;
+    image_url: string
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER})
-  role: string;
+    role: string
 
   @CreateDateColumn()
-  created_at: Date;
+    created_at: Date
 
   @OneToMany(() => Product, (product) => product.user)
-  products: Product[];
+    products: Product[]
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
-  transactions: Transaction[];
+    transactions: Transaction[]
 }
