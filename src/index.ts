@@ -4,7 +4,7 @@ import express from 'express'
 import { AppDataSource } from './config/data-source'
 import { env } from './env' 
 import { routes } from './routes'
-import { globalError } from './middleware/globalError'
+import { globalError } from './middleware/global-error'
 
 AppDataSource.initialize().then(() => {
   
