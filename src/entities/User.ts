@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { UserRole } from '../shared/types/roles'
 import { Transaction } from './Transaction'
 import { Product } from './Product'
@@ -19,7 +19,7 @@ export class User {
     password: string
 
   @Column()
-    phone: number
+    phone: string
 
   @Column({ nullable: true })
     image_url: string
@@ -29,6 +29,9 @@ export class User {
 
   @CreateDateColumn()
     created_at: Date
+
+  @UpdateDateColumn()
+    updated_at: Date
 
   @OneToMany(() => Product, (product) => product.user)
     products: Product[]
