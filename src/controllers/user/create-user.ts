@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
 import { createUserService } from '../../services/user/create-user'
-import { BadRequestError } from '../../errors/AppError'
+import { UserAlreadyExistsError } from '../../errors/AppError'
 
 export async function createUser(req: Request, res: Response){
 
@@ -27,9 +27,13 @@ export async function createUser(req: Request, res: Response){
     })
 
     return res.status(201).send()
+    
   } catch(error){
-    if (error instanceof BadRequestError) {
-      return res.status(400).json({ message: error.message })
+
+    if (error instanceof UserAlreadyExistsError) {
+      return res.status(409).send({ message: error.message })
     }
+
+    throw error
   }
 }

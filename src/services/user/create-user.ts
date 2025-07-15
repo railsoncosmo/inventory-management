@@ -1,4 +1,4 @@
-import { BadRequestError } from '../../errors/AppError'
+import { UserAlreadyExistsError } from '../../errors/AppError'
 import { userRepository } from '../../repositories/user/user-repository'
 import { hash } from 'bcryptjs'
 
@@ -27,7 +27,7 @@ export async function createUserService({
   })
 
   if(userAlreadyExists){
-    throw new BadRequestError('E-mail já está cadastrado.')
+    throw new UserAlreadyExistsError()
   }
 
   const user = userRepository.create({
