@@ -7,8 +7,8 @@ export async function createUser(req: Request, res: Response){
 
   const createUserBodySchema = z.object({
     name: z.string(),
-    email: z.email('Digite um email válido.'),
-    password: z.string().min(6, 'A senha deve ter no mínimo 6 caracteres.'),
+    email: z.email(),
+    password: z.string().min(6),
     phone: z.string(),
     image_url: z.url().optional(),
     role: z.enum(['admin', 'user']),
