@@ -27,6 +27,7 @@
     "typescript-eslint": "^8.36.0"
   },
   "dependencies": {
+    "@casl/ability": "^6.7.3",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
