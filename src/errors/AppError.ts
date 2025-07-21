@@ -42,3 +42,9 @@ export class InvalidCredentialsError extends AppError {
     super('Credenciais inválidas.', 400 )
   }
 }
+
+export class PermissionNotFoundError extends AppError {
+  constructor(){
+    super('Permissão não encontrada para esse usuário.', 400 )
+  }
+}
