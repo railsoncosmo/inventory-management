@@ -16,7 +16,7 @@ export class Transaction {
     quantity: number
 
   @Column({ type: 'enum', enum: TypeTransaction })
-    type: string
+    type: TypeTransaction
 
   @CreateDateColumn()
     created_at: Date
