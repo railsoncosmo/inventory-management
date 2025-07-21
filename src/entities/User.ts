@@ -25,7 +25,7 @@ export class User {
     image_url: string
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER})
-    role: string
+    role: UserRole
 
   @CreateDateColumn()
     created_at: Date

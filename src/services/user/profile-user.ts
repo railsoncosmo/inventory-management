@@ -7,11 +7,7 @@ interface GetUserProfileRequest {
   userId: string
 }
 
-interface GetUserProfileResponse {
-  user: User
-}
-
-export async function getProfileUser({userId}: GetUserProfileRequest): Promise<GetUserProfileResponse>{
+export async function getProfileUser({userId}: GetUserProfileRequest): Promise<User>{
 
   const user = await userRepository.findOne({
     where: {
@@ -23,7 +19,5 @@ export async function getProfileUser({userId}: GetUserProfileRequest): Promise<G
     throw new NotFoundError('Recurso não encontrado.')
   }
 
-  return {
-    user
-  }
+  return user
 }

@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { z } from 'zod'
 import { createUserService } from '../../services/user/create-user'
 import { UserAlreadyExistsError } from '../../errors/AppError'
+import { UserRole } from '../../shared/types/roles'
 
 export async function createUser(req: Request, res: Response){
 
@@ -11,7 +12,7 @@ export async function createUser(req: Request, res: Response){
     password: z.string().min(6),
     phone: z.string(),
     image_url: z.url().optional(),
-    role: z.enum(['admin', 'user']),
+    role: z.enum(UserRole),
   })
 
   const { name, email, password, phone, role, image_url } = createUserBodySchema.parse(req.body)

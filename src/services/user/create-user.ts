@@ -1,6 +1,7 @@
 import { UserAlreadyExistsError } from '../../errors/AppError'
 import { userRepository } from '../../repositories/user/user-repository'
 import { hash } from 'bcryptjs'
+import { UserRole } from '../../shared/types/roles'
 
 
 interface CreateUserRequest {
@@ -9,7 +10,7 @@ interface CreateUserRequest {
   password: string
   phone: string
   image_url?: string
-  role: 'admin' | 'user'
+  role: UserRole
 }
 
 export async function createUserService({

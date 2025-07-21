@@ -4,12 +4,7 @@ import { getProfileUser } from '../../services/user/profile-user'
 export async function profile(req: Request, res: Response) {
   const userId = req.user_id
 
-  const { user } = await getProfileUser({userId})
+  const user = await getProfileUser({userId})
 
-  return res.status(200).send({
-    user: {
-      ...user,
-      password: undefined
-    }
-  })
+  return res.status(200).send({ user })
 }
