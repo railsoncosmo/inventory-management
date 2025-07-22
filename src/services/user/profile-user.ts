@@ -12,7 +12,8 @@ export async function getProfileUser({userId}: GetUserProfileRequest): Promise<U
   const user = await userRepository.findOne({
     where: {
       id: userId
-    }
+    },
+    select: ['id', 'name', 'email', 'image_url', 'phone', 'role', 'created_at', 'products', 'products']
   })
 
   if(!user){
