@@ -10,6 +10,7 @@ export const permissions: Record<Role, PermissionsByRole> = {
     can('manage', 'all')
   },
   USER: (_user, { can, cannot }) => {
+    can('update', 'User')
     can(['create', 'read'], 'Product')
     cannot('create', 'Category')
     can('read', 'Category')
