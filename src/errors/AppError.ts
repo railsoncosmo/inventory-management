@@ -37,6 +37,12 @@ export class UserAlreadyExistsError extends AppError {
   }
 }
 
+export class CategoryAlreadyExistsError extends AppError {
+  constructor(){
+    super('Categoria já existe.', 400 )
+  }
+}
+
 export class InvalidCredentialsError extends AppError {
   constructor(){
     super('Credenciais inválidas.', 400 )
