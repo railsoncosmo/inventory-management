@@ -10,6 +10,9 @@ export class Category {
   @Column({ unique: true })
     name: string
 
+  @Column()
+    displayName: string
+
   @CreateDateColumn()
     created_at: Date
 
