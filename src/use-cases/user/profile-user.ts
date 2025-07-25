@@ -1,6 +1,6 @@
 import { User } from '../../entities/User'
-import { userRepository } from '../../repositories/user/user-repository'
-import { NotFoundError } from '../../errors/AppError'
+import { userRepository } from '../../infra/repositories/typeorm/typeorm-user-repository'
+import { NotFoundError } from '../errors/AppError'
 
 
 interface GetUserProfileRequest {

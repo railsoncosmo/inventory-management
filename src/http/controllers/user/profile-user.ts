@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { getProfileUser } from '../../services/user/profile-user'
+import { getProfileUser } from '../../../use-cases/user/profile-user'
 
 export async function profile(req: Request, res: Response) {
   const userId = req.user_id

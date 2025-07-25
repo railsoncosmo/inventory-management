@@ -1,7 +1,7 @@
-import { UserAlreadyExistsError } from '../../errors/AppError'
-import { userRepository } from '../../repositories/user/user-repository'
+import { UserAlreadyExistsError } from '../errors/AppError'
+import { userRepository } from '../../infra/repositories/typeorm/typeorm-user-repository'
 import { hash } from 'bcryptjs'
-import { UserRole } from '../../shared/types/roles'
+import { UserRole } from '../../enums/roles'
 
 
 interface CreateUserRequest {

@@ -2,8 +2,8 @@ import { Router } from 'express'
 import { createUser } from '../controllers/user/create-user'
 import { authUser } from '../controllers/user/auth-user'
 import { profile } from '../controllers/user/profile-user'
-import { authentication } from '../middleware/auth'
 import { updateUser } from '../controllers/user/update-user'
+import { authentication } from '../middleware/auth'
 
 export const userRoute = Router()
 

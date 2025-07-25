@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import { createCategoryService } from '../../services/category/create-category'
-import { getProfileUser } from '../../services/user/profile-user'
-import { UnauthorizedError } from '../../errors/AppError'
-import { getUserPermission } from '../../utils/get-user-permission'
+import { createCategoryService } from '../../../use-cases/category/create-category'
+import { getProfileUser } from '../../../use-cases/user/profile-user'
+import { UnauthorizedError } from '../../../use-cases/errors/AppError'
+import { getUserPermission } from '../../../utils/get-user-permission'
 
 export async function createCategory(req: Request, res: Response){
 

@@ -1,6 +1,6 @@
 import { Category } from '../../entities/Category'
-import { CategoryAlreadyExistsError } from '../../errors/AppError'
-import { categoryRepository } from '../../repositories/category/category-repository'
+import { CategoryAlreadyExistsError } from '../errors/AppError'
+import { categoryRepository } from '../../infra/repositories/typeorm/typeorm-category-repository'
 
 interface CreateCategoryRequest {
   name: string

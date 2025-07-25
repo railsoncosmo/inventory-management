@@ -1,7 +1,7 @@
 import { compare } from 'bcryptjs'
 import { User } from '../../entities/User'
-import { InvalidCredentialsError } from '../../errors/AppError'
-import { userRepository } from '../../repositories/user/user-repository'
+import { InvalidCredentialsError } from '../errors/AppError'
+import { userRepository } from '../../infra/repositories/typeorm/typeorm-user-repository'
 
 
 interface AuthUserRequest {

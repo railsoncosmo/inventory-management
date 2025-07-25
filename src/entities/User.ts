@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { UserRole } from '../shared/types/roles'
+import { UserRole } from '../enums/roles'
 import { Transaction } from './Transaction'
 import { Product } from './Product'
 

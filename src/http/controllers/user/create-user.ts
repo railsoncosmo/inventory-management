@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import { createUserService } from '../../services/user/create-user'
-import { UserAlreadyExistsError } from '../../errors/AppError'
-import { UserRole } from '../../shared/types/roles'
+import { createUserService } from '../../../use-cases/user/create-user'
+import { UserAlreadyExistsError } from '../../../use-cases/errors/AppError'
+import { UserRole } from '../../../enums/roles'
 
 export async function createUser(req: Request, res: Response){
 

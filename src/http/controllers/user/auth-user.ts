@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import { InvalidCredentialsError } from '../../errors/AppError'
-import { authUserService } from '../../services/user/auth-user'
+import { InvalidCredentialsError } from '../../../use-cases/errors/AppError'
+import { authUserService } from '../../../use-cases/user/auth-user'
 import { sign } from 'jsonwebtoken'
-import { env } from '../../env'
+import { env } from '../../../config/env'
 
 export async function authUser(req: Request, res: Response){
 

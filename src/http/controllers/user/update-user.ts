@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import { BadRequestError } from '../../errors/AppError'
-import { updateUserService } from '../../services/user/update-user'
+import { BadRequestError } from '../../../use-cases/errors/AppError'
+import { updateUserService } from '../../../use-cases/user/update-user'
 
 export async function updateUser(req: Request, res: Response){
 

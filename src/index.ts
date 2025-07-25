@@ -2,9 +2,9 @@ import 'express-async-errors'
 import 'dotenv/config'
 import express from 'express'
 import { AppDataSource } from './config/data-source'
-import { env } from './env' 
-import { routes } from './routes'
-import { globalError } from './middleware/global-error'
+import { env } from './config/env' 
+import { routes } from './http/routes'
+import { globalError } from './http/middleware/global-error'
 
 AppDataSource.initialize().then(() => {
   

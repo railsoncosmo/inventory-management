@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../errors/AppError'
-import { userRepository } from '../../repositories/user/user-repository'
+import { NotFoundError } from '../errors/AppError'
+import { userRepository } from '../../infra/repositories/typeorm/typeorm-user-repository'
 
 interface UpdateUserRequest {
   userId: string
