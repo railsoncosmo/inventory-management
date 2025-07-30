@@ -1,7 +1,8 @@
 import { AbilityBuilder } from '@casl/ability'
-import { User } from './models/user'
 import { AppAbility } from '.'
+import { User } from '@/core/domain/user/user.entity'
 import { Role } from './roles'
+
 
 type PermissionsByRole = (user: User, builder: AbilityBuilder<AppAbility>) => void;
 
