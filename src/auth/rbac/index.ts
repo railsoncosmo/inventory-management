@@ -2,7 +2,7 @@ import { createMongoAbility, CreateAbility, MongoAbility, AbilityBuilder } from 
 import { z } from 'zod'
 import { User } from './models/user'
 import { permissions } from './permissions'
-import { PermissionNotFoundError } from '../../application/errors/AppError'
+import { PermissionNotFoundError } from '../../application/errors/permission-not-found-error'
 import { userSubjectSchema } from './subjects/user'
 import { productSubjectSchema } from './subjects/product'
 import { categorySubjectSchema } from './subjects/category'

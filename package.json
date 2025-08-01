@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node ./src/index.ts",
+    "dev": "nodemon --exec ts-node ./src/server.ts",
     "typeorm": "node -r ts-node/register -r dotenv/config ./node_modules/typeorm/cli.js",
-    "migration:generate": "npm run typeorm -- -d ./src/config/data-source.ts migration:generate ./src/migrations/default",
-    "migration:run": "npm run typeorm -- -d ./src/config/data-source.ts migration:run"
+    "migration:generate": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:generate ./src/infra/database/typeorm/migrations/migration",
+    "migration:run": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:run"
   },
   "keywords": [],
   "author": "",
