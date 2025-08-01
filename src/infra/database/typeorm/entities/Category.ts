@@ -1,0 +1,21 @@
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Product } from './Product'
+
+@Entity('categories')
+export class Category {
+
+  @PrimaryGeneratedColumn('uuid')
+    id: string
+
+  @Column({ unique: true })
+    name: string
+
+  @Column('varchar')
+    displayName: string
+
+  @CreateDateColumn({ type: 'timestamptz' })
+    created_at: Date
+
+  @OneToMany(() => Product, (product) => product.category)
+    products: Product[]
+}
