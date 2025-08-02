@@ -24,4 +24,8 @@ export class UserTypeormRepository implements UserGateway {
     const newUser = this.typeOrmClient.create(data)
     await this.typeOrmClient.save(newUser)
   }
+
+  async countByEmail(email: string): Promise<number> {
+    return await this.typeOrmClient.count({ where: { email } })
+  }
 }

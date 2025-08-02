@@ -13,7 +13,7 @@ export type UserProps = {
 
 export class User {
   private constructor(private props: UserProps){
-    this.valitadeUserRole()
+    this.validateUserRole()
   }
 
   public static create(name: string, email: string, password: string, phone: string, role: string){
@@ -31,7 +31,7 @@ export class User {
     return new User(props)
   }
 
-  private valitadeUserRole(){
+  private validateUserRole(){
     if(!this.props.role || this.props.role.trim() === ''){
       throw new Error('User must have a role')
     }
