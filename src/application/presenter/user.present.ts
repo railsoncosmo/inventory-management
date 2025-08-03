@@ -1,6 +1,5 @@
-import { User } from '../../core/domain/entities/user/user.entity'
-import { CreateUserOutputDto } from '../dto/create-user.dto'
+import { AuthUserOutputDto } from '../dto/user/auth-user.dto'
 
-export interface CreateUserPresenters {
-  present(user: User): CreateUserOutputDto
+export interface UserPresenters {
+  presentAuthUser(token: string): Promise<AuthUserOutputDto>
 }

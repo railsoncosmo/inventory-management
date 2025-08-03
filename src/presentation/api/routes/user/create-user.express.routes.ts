@@ -2,15 +2,14 @@ import { ZodError } from 'zod'
 import { Request, Response } from 'express'
 import { CreateUserUseCase } from '../../../../application/usecases/user/create-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '../../routes/routes'
-import { CreateUserHttpPresenters } from '../../../http/presenters/create-user-http.presenter'
-import { CreateUserInputDto } from '../../../../application/dto/create-user.dto'
+import { CreateUserInputDto } from '../../../../application/dto/user/create-user.dto'
 import { createUserBodySchema } from '../../../validators/user/create-user-body-schema'
 
 export type CreateUserResponseDto = {
   id: string
 }
 
-export class CreateUserRoute implements Routes, CreateUserHttpPresenters {
+export class CreateUserRoute implements Routes {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
@@ -40,10 +39,9 @@ export class CreateUserRoute implements Routes, CreateUserHttpPresenters {
           role
         }
 
-        const output: CreateUserResponseDto = await this.createUserUseCase.execute(input)
-        const responseBody = this.present(output)
+        await this.createUserUseCase.execute(input)
 
-        res.status(201).json(responseBody).send()
+        res.status(201).send()
       } catch (error) {
         if (error instanceof ZodError) {
           res.status(409).send({ message: error.message })
@@ -58,13 +56,5 @@ export class CreateUserRoute implements Routes, CreateUserHttpPresenters {
   }
   getMethod(): HttpMethod {
     return this.method
-  }
-
-  present(user: CreateUserResponseDto): CreateUserResponseDto {
-    const response = {
-      id: user.id
-    }
-
-    return response
   }
 }

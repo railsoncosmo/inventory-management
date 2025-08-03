@@ -8,7 +8,11 @@ export class BcryptHash implements Hashing {
     return new BcryptHash(salt)
   }
 
-  async hash(value: string): Promise<string> {
-    return await bcrypt.hash(value, this.salt)
+  async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, this.salt)
+  }
+
+  async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compareSync(password, hashedPassword)
   }
 }

@@ -2,7 +2,7 @@ import { TokenGenerator, TokenVerifier } from '../../application/ports/token'
 import jwt from 'jsonwebtoken'
 
 export class JwtToken implements TokenGenerator, TokenVerifier {
-  private constructor(
+  constructor(
     private readonly secret: string,
   ){}
 

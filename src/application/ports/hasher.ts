@@ -1,3 +1,4 @@
 export interface Hashing {
-  hash(value: string): Promise<string>
+  hashPassword(password: string): Promise<string>
+  comparePassword(password: string, hashedPassword: string): Promise<boolean>
 }

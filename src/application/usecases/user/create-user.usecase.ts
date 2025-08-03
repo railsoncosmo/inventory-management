@@ -3,18 +3,16 @@ import { UserGateway } from '../../../core/domain/entities/user/user.gateway'
 import { UseCase } from '../usecase'
 import { UserAlreadyExistsError } from '../../../application/errors/user-already-exists-error'
 import { Hashing } from '../../ports/hasher'
-import { CreateUserInputDto, CreateUserOutputDto } from '../../dto/create-user.dto'
-import { CreateUserPresenters } from '../../../application/presenter/user.present'
+import { CreateUserInputDto, CreateUserOutputDto } from '../../dto/user/create-user.dto'
 
 export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUserOutputDto> {
   private constructor(
     private readonly userGateway: UserGateway,
-    private readonly hashing: Hashing,
-    private readonly userPresenters: CreateUserPresenters,
+    private readonly encrypter: Hashing,
   ){}
 
-  public static create(userGateway: UserGateway, userPresenters: CreateUserPresenters, hashing: Hashing){
-    return new CreateUserUseCase(userGateway, hashing, userPresenters)
+  public static create(userGateway: UserGateway, hashing: Hashing){
+    return new CreateUserUseCase(userGateway, hashing)
   }
 
   async execute({
@@ -25,7 +23,7 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
     role
   }: CreateUserInputDto): Promise<CreateUserOutputDto>{
 
-    const passwordHashed = await this.hashing.hash(password)
+    const passwordHashed = await this.encrypter.hashPassword(password)
 
     const userAlreadyExists = await this.userGateway.countByEmail(email)
     if(userAlreadyExists){
@@ -33,8 +31,6 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
     }
 
     const user = User.create(name, email, passwordHashed, phone, role)
-    await this.userGateway.save(user)
-
-    return this.userPresenters.present(user)
+    return await this.userGateway.save(user)
   }
 }

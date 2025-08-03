@@ -7,8 +7,11 @@ import { createRepositories } from './infra/database/repository-container'
 import { AppDataSource } from './package/typeorm/data-source'
 import { CreateUserRoute } from './presentation/api/routes/user/create-user.express.routes'
 import { BcryptHash } from './infra/adapters/hash-adapter'
-import { CreateUserHttpPresenters } from './presentation/http/presenters/create-user-http.presenter'
 import { ApiExpress } from './presentation/api/express/api.express'
+import { AuthUserUseCase } from './application/usecases/user/auth-user.usecase'
+import { CreateUserHttpPresenters } from './presentation/http/presenters/create-user-http.presenter'
+import { JwtToken } from './infra/adapters/jwt-adapter'
+import { AuthUserRoute } from './presentation/api/routes/user/auth-user.express.routes'
 
 async function server(){
   try {
@@ -17,13 +20,17 @@ async function server(){
 
     const repositories = createRepositories(dataSource)
 
-    const hashing = BcryptHash.create()
-    const presenter = new CreateUserHttpPresenters()
-    const createUserUseCase = CreateUserUseCase.create(repositories.userRepository, presenter, hashing)
+    const encrypter = BcryptHash.create()
+    const createUserUseCase = CreateUserUseCase.create(repositories.userRepository, encrypter)
+
+    const userPresenters = new CreateUserHttpPresenters()
+    const tokenGenerator = new JwtToken(env.JWT_SECRET)
+    const authUserUseCase = AuthUserUseCase.create(repositories.userRepository, encrypter, userPresenters, tokenGenerator)
 
     const createUserRoute = CreateUserRoute.create(createUserUseCase)
+    const authUserRoute = AuthUserRoute.create(authUserUseCase)
 
-    const api = ApiExpress.create([createUserRoute])
+    const api = ApiExpress.create([createUserRoute, authUserRoute])
     api.start(env.PORT)
 
   } catch (error) {

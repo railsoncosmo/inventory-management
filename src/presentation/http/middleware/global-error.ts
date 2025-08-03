@@ -10,8 +10,7 @@ export const globalError = (
 ) => {
 
   if (error instanceof ZodError) {
-    console.log(error)
-    return res.status(400).send({message: 'Erro de validação.'})
+    return res.status(400).send({message: 'Os dados fornecidos são inválidos.'})
   }
 
   console.log(error)

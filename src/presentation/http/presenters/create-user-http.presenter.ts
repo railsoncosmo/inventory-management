@@ -1,11 +1,8 @@
-import { CreateUserOutputDto } from '../../../application/dto/create-user.dto'
-import { CreateUserPresenters } from '../../../application/presenter/user.present'
-import { User } from '../../../core/domain/entities/user/user.entity'
+import { AuthUserOutputDto } from '../../../application/dto/user/auth-user.dto'
+import { UserPresenters } from '../../../application/presenter/user.present'
 
-export class CreateUserHttpPresenters implements CreateUserPresenters {
-  present(user: User): CreateUserOutputDto {
-    return {
-      id: user.id
-    }
+export class CreateUserHttpPresenters implements UserPresenters {
+  presentAuthUser(token: string): Promise<AuthUserOutputDto> {
+    return Promise.resolve({ token })
   }
 }

@@ -27,13 +27,20 @@ export class User {
     })
   }
 
+  public static userAuth(props: UserProps){
+    return new User({
+      ...props
+    })
+  }
+
   public static withUser(props: UserProps){
     return new User(props)
   }
 
   private validateUserRole(){
-    if(!this.props.role || this.props.role.trim() === ''){
-      throw new Error('User must have a role')
+    const roles = ['ADMIN', 'USER']
+    if (!roles.includes(this.props.role)){
+      throw new Error('Invalid user role')
     }
   }
 

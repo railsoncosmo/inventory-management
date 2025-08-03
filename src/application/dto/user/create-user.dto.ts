@@ -6,6 +6,4 @@ export type CreateUserInputDto = {
   role: 'ADMIN' | 'USER'
 }
 
-export type CreateUserOutputDto = {
-  id: string
-}
+export type CreateUserOutputDto = void
