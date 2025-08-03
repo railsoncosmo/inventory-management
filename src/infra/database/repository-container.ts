@@ -6,6 +6,6 @@ export const createRepositories = (dataSource: DataSource) => {
   const ormRepo = dataSource.getRepository(UserORM)
 
   return {
-    userRepository: UserTypeormRepository.create(ormRepo),
+    userRepository: UserTypeormRepository.build(ormRepo),
   }
 }

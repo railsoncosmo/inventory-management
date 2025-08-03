@@ -8,7 +8,7 @@ import { UserMapper } from '../mappers/user.mapper'
 export class UserTypeormRepository implements UserGateway {
   private constructor(private readonly typeOrmClient: Repository<UserORM>) {}
 
-  public static create(typeOrmClient: Repository<UserORM>) {
+  public static build(typeOrmClient: Repository<UserORM>) {
     return new UserTypeormRepository(typeOrmClient)
   }
 
@@ -30,7 +30,7 @@ export class UserTypeormRepository implements UserGateway {
     return await this.typeOrmClient.count({ where: { email } })
   }
 
-  async findByEmail(email: string): Promise<UserDomain | null> {
+  async find(email: string): Promise<UserDomain | null> {
     const user = await this.typeOrmClient.findOne({ where: { email } })
     if (!user) return null
     return UserMapper.toDomain(user)
