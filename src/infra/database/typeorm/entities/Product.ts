@@ -22,7 +22,7 @@ export class Product {
   @Column({ nullable: true, type: 'text' })
     image_url: string
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     created_at: Date
 
   @ManyToOne(() => User, (user) => user.products)

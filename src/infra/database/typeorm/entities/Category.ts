@@ -13,7 +13,7 @@ export class Category {
   @Column('varchar')
     displayName: string
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     created_at: Date
 
   @OneToMany(() => Product, (product) => product.category)

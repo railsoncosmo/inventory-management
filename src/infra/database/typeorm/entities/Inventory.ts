@@ -10,13 +10,13 @@ export class Inventory {
   @Column({ name: 'product_id', unique: true })
     product_id: string
 
-  @OneToOne(() => Product, (product) => product.inventory)
+  @OneToOne(() => Product)
   @JoinColumn({ name: 'product_id'})
     product: Product
 
   @Column('bigint')
     quantity: number
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ type: 'timestamp',default: () => 'NOW()' })
     updated_at: Date
 }

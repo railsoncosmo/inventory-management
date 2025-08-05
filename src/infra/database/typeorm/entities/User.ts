@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 import { UserRole } from '../../../../core/domain/enums/roles'
 import { Transaction } from './Transaction'
 import { Product } from './Product'
+import { Token } from './Token'
 
 @Entity('users')
 export class User {
@@ -27,10 +28,10 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER})
     role: UserRole
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     created_at: Date
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     updated_at: Date
 
   @OneToMany(() => Product, (product) => product.user)
@@ -38,4 +39,7 @@ export class User {
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
     transactions: Transaction[]
+
+  @OneToMany(() => Token, (product) => product.user_id)
+    tokens: Token[]
 }

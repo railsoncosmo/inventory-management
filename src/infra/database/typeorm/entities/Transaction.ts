@@ -18,7 +18,7 @@ export class Transaction {
   @Column({ type: 'enum', enum: TypeTransaction })
     type: TypeTransaction
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     created_at: Date
 
   @ManyToOne(() => Product, (product) => product.transactions)

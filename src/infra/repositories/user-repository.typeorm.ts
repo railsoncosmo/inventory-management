@@ -6,10 +6,10 @@ import { UserRole } from '../../core/domain/enums/roles'
 //import { UserMapper } from '../mappers/user.mapper'
 
 export class UserTypeormRepository implements UserGateway {
-  constructor(private readonly repository: Repository<UserORM>) {}
+  constructor(private readonly userRepository: Repository<UserORM>) {}
 
-  public static build(repository: Repository<UserORM>) {
-    return new UserTypeormRepository(repository)
+  public static build(userRepository: Repository<UserORM>) {
+    return new UserTypeormRepository(userRepository)
   }
 
   async save(user: User): Promise<void> {
@@ -22,12 +22,12 @@ export class UserTypeormRepository implements UserGateway {
       role: user.role as UserRole,
     }
 
-    const newUser = this.repository.create(data)
-    await this.repository.save(newUser)
+    const newUser = this.userRepository.create(data)
+    await this.userRepository.save(newUser)
   }
 
   async countByEmail(email: string): Promise<number> {
-    return await this.repository.count({ 
+    return await this.userRepository.count({ 
       where: { 
         email 
       } 
@@ -35,7 +35,7 @@ export class UserTypeormRepository implements UserGateway {
   }
 
   async find(email: string): Promise<User | null> {
-    const user = await this.repository.findOne({ 
+    const user = await this.userRepository.findOne({ 
       where: { 
         email 
       } 
