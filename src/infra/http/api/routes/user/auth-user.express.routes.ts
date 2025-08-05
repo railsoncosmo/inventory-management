@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import { AuthUserUseCase } from '../../../../application/usecases/user/auth-user.usecase'
+import { AuthUserUseCase } from '../../../../../application/usecases/user/auth-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '../../routes/routes'
-import { authUserBodySchema } from '../../../validators/user/auth-user-body-schema'
-import { AuthUserInputDto } from '../../../../application/dto/user/auth-user.dto'
-import { InvalidCredentialsError } from '../../../../application/errors/invalid-credentials-error'
+import { authUserBodySchema } from '../../../../../shared/validators/user/auth-user-body-schema'
+import { AuthUserInputDto } from '../../../../../application/dto/user/auth-user.dto'
+import { InvalidCredentialsError } from '../../../../../application/errors/invalid-credentials-error'
 
 export type CreateUserResponseDto = {
   id: string
@@ -36,9 +36,17 @@ export class AuthUserRoute implements Routes {
           password,
         }
 
-        const { token } = await this.authUserUseCase.execute(input)
+        const { token, refreshToken } = await this.authUserUseCase.execute(input)
 
-        res.status(200).send({ token })
+        res
+          .cookie('refreshToken', refreshToken, {
+            path: '/',
+            secure: true,
+            sameSite: true,
+            httpOnly: true })
+          .status(200)
+          .send({ token })
+          
       } catch (error) {
         if (error instanceof InvalidCredentialsError) {
           res.status(401).send({ message: error.message })

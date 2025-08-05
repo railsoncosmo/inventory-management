@@ -30,10 +30,14 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       throw new InvalidCredentialsError()
     }
 
-    const token = await this.tokenGenerator.generate({
+    const accessToken = await this.tokenGenerator.generateAccessToken({
       sub: user.id,
     })
 
-    return this.userPresenters.presentAuthUser(token)
+    const refreshToken = await this.tokenGenerator.generateRefreshToken({
+      sub: user.id,
+    })
+
+    return this.userPresenters.presentAuthUser(accessToken, refreshToken)
   }
 }

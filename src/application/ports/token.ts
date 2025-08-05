@@ -1,7 +1,9 @@
 export interface TokenGenerator {
-  generate(payload: Record<string, unknown>): Promise<string>
+  generateAccessToken(payload: Record<string, unknown>): Promise<string>
+  generateRefreshToken(payload: Record<string, unknown>): Promise<string>
 }
 
 export interface TokenVerifier {
-  verify(token: string): Promise<Record<string, unknown>>
+  verifyAccessToken(token: string): Promise<Record<string, unknown>>
+  verifyRefreshToken(refreshToken: string): Promise<Record<string, unknown>>
 }

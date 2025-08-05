@@ -40,13 +40,13 @@ export class User {
   private validateUserRole(){
     const roles = ['ADMIN', 'USER']
     if (!roles.includes(this.props.role)){
-      throw new Error('Invalid user role')
+      throw new Error('Cargo de usuário inválido.')
     }
   }
 
   public changeRole(newRole: string){
     if(this.props.role === newRole){
-      throw new Error('User already belongs this role')
+      throw new Error('O usuário já pertence a esse cargo.')
     }
     this.props.role = newRole
     this.props.updated_at = new Date()

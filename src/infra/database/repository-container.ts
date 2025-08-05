@@ -3,9 +3,9 @@ import { User as UserORM } from '../database/typeorm/entities/User'
 import { UserTypeormRepository } from '../repositories/user-repository.typeorm'
 
 export const createRepositories = (dataSource: DataSource) => {
-  const ormRepo = dataSource.getRepository(UserORM)
+  const repository = dataSource.getRepository(UserORM)
 
   return {
-    userRepository: UserTypeormRepository.build(ormRepo),
+    userRepository: UserTypeormRepository.build(repository),
   }
 }

@@ -1,9 +1,9 @@
-import { ZodError } from 'zod'
 import { Request, Response } from 'express'
-import { CreateUserUseCase } from '../../../../application/usecases/user/create-user.usecase'
+import { CreateUserUseCase } from '../../../../../application/usecases/user/create-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '../../routes/routes'
-import { CreateUserInputDto } from '../../../../application/dto/user/create-user.dto'
-import { createUserBodySchema } from '../../../validators/user/create-user-body-schema'
+import { CreateUserInputDto } from '../../../../../application/dto/user/create-user.dto'
+import { createUserBodySchema } from '../../../../../shared/validators/user/create-user-body-schema'
+import { UserAlreadyExistsError } from '../../../../../application/errors/user-already-exists-error'
 
 export type CreateUserResponseDto = {
   id: string
@@ -14,7 +14,6 @@ export class CreateUserRoute implements Routes {
     private readonly path: string,
     private readonly method: HttpMethod,
     private readonly createUserUseCase: CreateUserUseCase,
-    
   ){}
 
   public static create(createUserUseCase: CreateUserUseCase){
@@ -43,7 +42,7 @@ export class CreateUserRoute implements Routes {
 
         res.status(201).send()
       } catch (error) {
-        if (error instanceof ZodError) {
+        if (error instanceof UserAlreadyExistsError) {
           res.status(409).send({ message: error.message })
         }
         throw error

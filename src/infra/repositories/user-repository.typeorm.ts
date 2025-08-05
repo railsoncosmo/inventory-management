@@ -1,17 +1,18 @@
 import { Repository } from 'typeorm'
 import { User as UserORM } from '../database/typeorm/entities/User'
-import { User as UserDomain } from '../../core/domain/entities/user/user.entity'
+import { User } from '../../core/domain/entities/user/user.entity'
 import { UserGateway } from '../../core/domain/entities/user/user.gateway'
 import { UserRole } from '../../core/domain/enums/roles'
+//import { UserMapper } from '../mappers/user.mapper'
 
 export class UserTypeormRepository implements UserGateway {
-  private constructor(private readonly typeOrmClient: Repository<UserORM>) {}
+  constructor(private readonly repository: Repository<UserORM>) {}
 
-  public static build(typeOrmClient: Repository<UserORM>) {
-    return new UserTypeormRepository(typeOrmClient)
+  public static build(repository: Repository<UserORM>) {
+    return new UserTypeormRepository(repository)
   }
 
-  async save(user: UserDomain): Promise<void> {
+  async save(user: User): Promise<void> {
     const data = {
       id: user.id,
       name: user.name,
@@ -21,17 +22,35 @@ export class UserTypeormRepository implements UserGateway {
       role: user.role as UserRole,
     }
 
-    const newUser = this.typeOrmClient.create(data)
-    await this.typeOrmClient.save(newUser)
+    const newUser = this.repository.create(data)
+    await this.repository.save(newUser)
   }
 
   async countByEmail(email: string): Promise<number> {
-    return await this.typeOrmClient.count({ where: { email } })
+    return await this.repository.count({ 
+      where: { 
+        email 
+      } 
+    })
   }
 
-  async find(email: string): Promise<UserDomain | null> {
-    const user = await this.typeOrmClient.findOne({ where: { email } })
+  async find(email: string): Promise<User | null> {
+    const user = await this.repository.findOne({ 
+      where: { 
+        email 
+      } 
+    })
     if (!user) return null
-    return UserDomain.withUser(user)
+    return User.withUser(user)
   }
+
+  // async getUserProfile(userId: string): Promise<User  | null> {
+  //   const user = await this.repository.findOne({ 
+  //     where: { 
+  //       id: userId 
+  //     } 
+  //   })
+  //   if (!user) return null
+  //   return UserMapper.userProfileDTO(user)
+  // }
 }
