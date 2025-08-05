@@ -3,6 +3,8 @@ import { z } from 'zod'
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('production'),
   JWT_SECRET: z.string(),
+  REFRESH_TOKEN_SECRET: z.string(),
+  EXPIRES_REFRESH_TOKEN_DAYS: z.coerce.number(),
   PORT: z.coerce.number().default(3333),
   DB_HOST: z.string(),
   DB_PORT: z.coerce.number().default(5432),

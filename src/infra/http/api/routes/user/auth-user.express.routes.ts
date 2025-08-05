@@ -36,10 +36,10 @@ export class AuthUserRoute implements Routes {
           password,
         }
 
-        const { token, refreshToken } = await this.authUserUseCase.execute(input)
+        const { token, refresh_token } = await this.authUserUseCase.execute(input)
 
         res
-          .cookie('refreshToken', refreshToken, {
+          .cookie('refreshToken', refresh_token, {
             path: '/',
             secure: true,
             sameSite: true,

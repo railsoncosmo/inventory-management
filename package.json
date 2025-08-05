@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/server.ts",
+    "start": "bun run ./src/server.ts",
     "typeorm": "node -r ts-node/register -r dotenv/config ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:generate ./src/infra/database/typeorm/migrations/migration",
     "migration:run": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:run"
@@ -31,6 +32,7 @@
     "@casl/ability": "^6.7.3",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
+    "dayjs": "^1.11.13",
     "dotenv": "^17.2.0",
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
