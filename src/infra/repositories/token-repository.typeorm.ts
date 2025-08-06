@@ -27,7 +27,7 @@ export class TokenTypeormRepository implements TokenGateway {
     const userToken = await this.tokenRepository.findOne({
       where: {
         user_id,
-        refresh_token
+        refresh_token,
       }
     })
     if (!userToken) return null
@@ -36,5 +36,9 @@ export class TokenTypeormRepository implements TokenGateway {
 
   async deleteByTokenId(id: string): Promise<void> {
     await this.tokenRepository.delete(id)
+  }
+
+  async deleteAllByUserId(user_id: string): Promise<void> {
+    await this.tokenRepository.delete({ user_id })
   }
 }

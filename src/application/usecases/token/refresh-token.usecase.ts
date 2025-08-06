@@ -3,7 +3,7 @@ import { RefreshTokenInputDto, RefreshTokenOutputDto } from '../../dto/user/crea
 import { TokenGenerator } from '../../ports/token'
 import { TokenVerifier } from '../../ports/token'
 import { UseCase } from '../usecase'
-import { RefrashTokenNotExists } from '../../errors/refesh-token-not-exists-error'
+import { RefreshTokenNotExists } from '../../errors/refesh-token-not-exists-error'
 import { DateProvider } from '../../ports/date'
 import { env } from '../../../config/env'
 import { UserPresenters } from '../../presenter/user.present'
@@ -42,9 +42,9 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
     const { sub } = await this.tokenVerifier.verifyRefreshToken(token) as unknown as Payload
     const user_id = sub
 
-    const userToken = await this.tokenGateway.findByUserIdAndRefreshToken(token, user_id)
+    const userToken = await this.tokenGateway.findByUserIdAndRefreshToken(user_id, token)
     if(!userToken){
-      throw new RefrashTokenNotExists()
+      throw new RefreshTokenNotExists()
     }
 
     await this.tokenGateway.deleteByTokenId(userToken.id)
@@ -60,6 +60,7 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
       refresh_token,
       expires_date: expiresRefreshToken,
     })
+
 
     return this.userPresenters.presentRefreshToken(newRefreshToken)
   }

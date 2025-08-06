@@ -9,9 +9,10 @@ export const globalError = (
   _next: NextFunction
 ) => {
 
-  if (res.headersSent) {
-    return _next(error)
-  }
+  // if (res.headersSent) {
+  //   return _next(error)
+  // }
+  console.log(error)
 
   if (error instanceof ZodError) {
     const formattedErrors = error.issues.map(e => ({

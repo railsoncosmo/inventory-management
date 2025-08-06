@@ -59,6 +59,8 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
 
     const expiresRefreshToken = this.dateProvider.addDays(env.EXPIRES_REFRESH_TOKEN_DAYS)
 
+    await this.tokenGateway.deleteAllByUserId(user.id)
+
     await this.tokenGateway.create({
       user_id: user.id,
       refresh_token: refreshToken,

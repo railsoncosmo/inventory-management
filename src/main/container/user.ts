@@ -37,7 +37,7 @@ export function userRoutes({ repositories, encrypter, tokenGenerator, dateProvid
   )
 
   const createUserRoute = CreateUserRoute.create(createUserUseCase)
-  const authUserRoute = AuthUserRoute.create(authUserUseCase)
+  const authUserRoute = AuthUserRoute.create(authUserUseCase, userPresenter)
 
   return [createUserRoute, authUserRoute]
 }

@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { httpMethod, HttpMethod, Routes } from '../../routes/routes'
-import { JwtToken } from '../../../../services/jwt'
+import { RefreshTokenUseCase } from '../../../../../application/usecases/token/refresh-token.usecase'
+import { CreateUserHttpPresenters } from '../../../../../presentation/user-http.presenter'
+import { NotFoundError } from '../../../../../application/errors/not-found-error'
 
 export type CreateUserResponseDto = {
   id: string
@@ -10,36 +12,35 @@ export class RefreshTokenRoute implements Routes {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
-    private readonly jwtService: JwtToken,
+    private readonly refreshTokenUseCase: RefreshTokenUseCase,
+    private readonly createUserHttpPresenters: CreateUserHttpPresenters,
   ){}
 
-  public static create(jwtService: JwtToken){
+  public static create(refreshTokenUseCase: RefreshTokenUseCase, createUserHttpPresenters: CreateUserHttpPresenters){
     return new RefreshTokenRoute(
       '/refresh/token',
-      httpMethod.PATCH,
-      jwtService,
+      httpMethod.POST,
+      refreshTokenUseCase,
+      createUserHttpPresenters
     )
   }
 
   getHandler() {
     return async (req: Request, res: Response) => {
-
-      const refreshToken = req.cookies?.refreshToken
-      const userId = req.user_id
+      const token = 
+        req.body.token || 
+        req.headers['x-access-token'] ||
+        req.query.token
       
-      await this.jwtService.verifyRefreshToken(refreshToken)
-      
-      const newAccessToken = this.jwtService.generateAccessToken({ sub: userId })
-      const newRefreshToken = this.jwtService.generateRefreshToken({ sub: userId })
+      if(!token){
+        throw new NotFoundError('Token não encontrado.')
+      }
 
-      res
-        .cookie('refreshToken', newRefreshToken, {
-          path: '/',
-          secure: true,
-          sameSite: true,
-          httpOnly: true })
-        .status(200)
-        .send({ newAccessToken })}
+      const refresh_token = await this.refreshTokenUseCase.execute({ token })
+      await this.createUserHttpPresenters.presentRefreshToken(refresh_token)
+      
+      res.status(200).json(refresh_token)
+    }
   }
   getPath(): string {
     return this.path
