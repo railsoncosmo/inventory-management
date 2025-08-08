@@ -48,6 +48,10 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
     }
 
     await this.tokenGateway.deleteByTokenId(userToken.id)
+
+    const newAccessToken = await this.tokenGenerator.generateAccessToken({
+      sub: userToken.id,
+    })
     
     const refresh_token = await this.tokenGenerator.generateRefreshToken({
       sub: sub,
@@ -62,6 +66,6 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
     })
 
 
-    return this.userPresenters.presentRefreshToken(newRefreshToken)
+    return this.userPresenters.presentAuthUser(newAccessToken, newRefreshToken.refresh_token)
   }
 }

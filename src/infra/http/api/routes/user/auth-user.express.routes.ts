@@ -40,7 +40,14 @@ export class AuthUserRoute implements Routes {
 
         const { token, refresh_token } = await this.authUserUseCase.execute(input)
         const user_tokens = await this.createUserHttpPresenters.presentAuthUser(token, refresh_token)
-        res.status(200).json(user_tokens)
+        res
+          .cookie('refresh_token', refresh_token, {
+            path: '/',
+            secure: true,
+            sameSite: true,
+            httpOnly: true })
+          .status(200)
+          .json(user_tokens)
 
       } catch (error) {
         if (error instanceof InvalidCredentialsError) {

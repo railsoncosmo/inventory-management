@@ -40,7 +40,14 @@ export class RefreshTokenRoute implements Routes {
       await this.createUserHttpPresenters.presentRefreshToken(refresh_token)
       
       res.status(200).json(refresh_token)
-    }
+      res
+        .cookie('refresh_token', refresh_token, {
+          path: '/',
+          secure: true,
+          sameSite: true,
+          httpOnly: true })
+        .status(200)
+        .json({ refresh_token })}
   }
   getPath(): string {
     return this.path

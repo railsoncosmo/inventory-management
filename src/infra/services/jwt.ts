@@ -9,7 +9,7 @@ export class JwtToken implements TokenGenerator, TokenVerifier {
   ){}
 
   async generateAccessToken(payload: Record<string, unknown>): Promise<string> {
-    return jwt.sign(payload, this.secret_token, { expiresIn: '10m' })
+    return jwt.sign(payload, this.secret_token, { expiresIn: '5m' })
   }
 
   async verifyAccessToken(token: string): Promise<Record<string, unknown>> {

@@ -9,7 +9,7 @@ interface Payload {
 export function authentication(req: Request, res: Response, next: NextFunction){
 
   if(!req.headers.authorization){
-    return res.status(401).end()
+    return res.status(401).end({ message: 'Token de acesso não fornecido.' })
   }
 
   const authtoken = req.headers.authorization
@@ -23,6 +23,6 @@ export function authentication(req: Request, res: Response, next: NextFunction){
 
     return next()
   } catch {
-    return res.status(401).end()
+    return res.status(401).json({ message: 'Token de acesso inválido ou expirado.' })
   }
 }
