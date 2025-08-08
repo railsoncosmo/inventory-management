@@ -4,6 +4,5 @@ export interface TokenGenerator {
 }
 
 export interface TokenVerifier {
-  verifyAccessToken(token: string): Promise<Record<string, unknown>>
-  verifyRefreshToken(refreshToken: string): Promise<Record<string, unknown>>
+  verifyToken(token: string): Promise<Record<string, unknown>>
 }

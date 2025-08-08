@@ -12,15 +12,11 @@ export class JwtToken implements TokenGenerator, TokenVerifier {
     return jwt.sign(payload, this.secret_token, { expiresIn: '5m' })
   }
 
-  async verifyAccessToken(token: string): Promise<Record<string, unknown>> {
-    return jwt.verify(token, this.secret_token) as Record<string, unknown>
-  }
-
   async generateRefreshToken(payload: Record<string, unknown>): Promise<string> {
     return jwt.sign(payload, this.secret_refresh_token , { expiresIn: '7d' })
   }
 
-  async verifyRefreshToken(refreshToken: string): Promise<Record<string, unknown>> {
-    return jwt.verify(refreshToken, this.secret_token) as Record<string, unknown>
+  async verifyToken(token: string): Promise<Record<string, unknown>> {
+    return jwt.verify(token, this.secret_token) as Record<string, unknown>
   }
 }
