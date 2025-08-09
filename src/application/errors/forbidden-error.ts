@@ -1,6 +1,6 @@
-import { AppError } from './app-error'
+import { Exception } from '@/core/entities/exception'
 
-export class ForbiddenError extends AppError {
+export class ForbiddenError extends Exception {
   constructor(message: string){
     super(message, 403 )
   }

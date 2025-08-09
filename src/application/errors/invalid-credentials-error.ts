@@ -1,6 +1,6 @@
-import { AppError } from './app-error'
+import { Exception } from '@/core/entities/exception'
 
-export class InvalidCredentialsError extends AppError {
+export class InvalidCredentialsError extends Exception {
   constructor(){
     super('Credenciais inválidas.', 400 )
   }

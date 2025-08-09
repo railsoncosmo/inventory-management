@@ -8,6 +8,7 @@ async function main() {
     const app = await server()
     app.start(env.PORT)
   } catch (error) {
+    console.log(error)
   }
 }
 

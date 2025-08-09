@@ -1,11 +1,11 @@
-import { TokenGateway } from '../../../core/domain/entities/token/token.gateway'
-import { RefreshTokenInputDto, RefreshTokenOutputDto } from '../../dto/user/create-user-token.dto'
-import { TokenProvider } from '../../ports/token'
-import { UseCase } from '../usecase'
-import { RefreshTokenNotExists } from '../../errors/refesh-token-not-exists-error'
-import { DateProvider } from '../../ports/date'
-import { env } from '../../../config/env'
-import { UserPresenters } from '../../presenter/user.present'
+import { UseCase } from '@/application/usecases/usecase'
+import { TokenGateway } from '@/application/gateways/token.gateway'
+import { TokenProvider } from '@/application/ports/out/token'
+import { DateProvider } from '@/application/ports/out/date'
+import { UserPresenters } from '@/application/ports/in/user.present'
+import { RefreshTokenInputDto, RefreshTokenOutputDto } from '@/application/dto/user/create-user-token.dto'
+import { RefreshTokenNotExists } from '@/application/errors/refesh-token-not-exists-error'
+import { env } from '@/config/env'
 
 
 interface Payload {

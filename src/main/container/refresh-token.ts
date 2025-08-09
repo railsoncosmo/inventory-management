@@ -1,9 +1,9 @@
-import { CreateUserHttpPresenters } from '../../presentation/user-http.presenter'
-import { TokenProvider } from '../../application/ports/token'
-import { TokenGateway } from '../../core/domain/entities/token/token.gateway'
-import { DateProvider } from '../../application/ports/date'
-import { RefreshTokenUseCase } from '../../application/usecases/token/refresh-token.usecase'
-import { RefreshTokenRoute } from '../../infra/http/api/routes/user/refresh-token.express.route'
+import { TokenProvider } from '@/application/ports/out/token'
+import { TokenGateway } from '@/application/gateways/token.gateway'
+import { DateProvider } from '@/application/ports/out/date'
+import { RefreshTokenUseCase } from '@/application/usecases/token/refresh-token.usecase'
+import { RefreshTokenRoute } from '@/infrastructure/http/api/routes/user/refresh-token.express.route'
+import { CreateUserHttpPresenters } from '@/presentation/user-http.presenter'
 
 interface RefreshComposer {
   repositories: { 

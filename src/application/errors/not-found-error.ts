@@ -1,6 +1,6 @@
-import { AppError } from './app-error'
+import { Exception } from '@/core/entities/exception'
 
-export class NotFoundError extends AppError {
+export class NotFoundError extends Exception {
   constructor(message: string){
     super(message, 404 )
   }

@@ -1,7 +1,7 @@
-import { AppError } from './app-error'
+import { Exception } from '@/core/entities/exception'
 
-export class RefreshTokenNotExists extends AppError {
+export class RefreshTokenNotExists extends Exception {
   constructor(){
-    super('Refresh token não expirado.', 400 )
+    super('Refresh token expirado.', 400 )
   }
 }

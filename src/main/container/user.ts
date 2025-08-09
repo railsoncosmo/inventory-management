@@ -1,15 +1,17 @@
-import { CreateUserUseCase } from '../../application/usecases/user/create-user.usecase'
-import { AuthUserUseCase } from '../../application/usecases/user/auth-user.usecase'
+import { CreateUserUseCase } from '@/application/usecases/user/create-user.usecase'
+import { AuthUserUseCase } from '@/application/usecases/user/auth-user.usecase'
 
-import { CreateUserRoute } from '../../infra/http/api/routes/user/create-user.express.routes'
-import { AuthUserRoute } from '../../infra/http/api/routes/user/auth-user.express.routes'
+import { CreateUserRoute } from '@/infrastructure/http/api/routes/user/create-user.express.routes'
+import { AuthUserRoute } from '@/infrastructure/http/api/routes/user/auth-user.express.routes'
 
-import { CreateUserHttpPresenters } from '../../presentation/user-http.presenter'
-import { UserGateway } from '../../core/domain/entities/user/user.gateway'
-import { TokenProvider } from '../../application/ports/token'
-import { Hashing } from '../../application/ports/hasher'
-import { TokenGateway } from '../../core/domain/entities/token/token.gateway'
-import { DateProvider } from '../../application/ports/date'
+import { UserGateway } from '@/application/gateways/user.gateway'
+import { TokenGateway } from '@/application/gateways/token.gateway'
+
+import { TokenProvider } from '@/application/ports/out/token'
+import { DateProvider } from '@/application/ports/out/date'
+import { Hashing } from '@/application/ports/out/hasher'
+
+import { CreateUserHttpPresenters } from '@/presentation/user-http.presenter'
 
 interface UserComposer {
   repositories: { 

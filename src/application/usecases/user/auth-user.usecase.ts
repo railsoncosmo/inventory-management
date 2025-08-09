@@ -1,13 +1,13 @@
-import { env } from '../../../config/env'
-import { TokenGateway } from '../../../core/domain/entities/token/token.gateway'
-import { UserGateway } from '../../../core/domain/entities/user/user.gateway'
-import { AuthUserInputDto, AuthUserOutputDto } from '../../dto/user/auth-user.dto'
-import { InvalidCredentialsError } from '../../errors/invalid-credentials-error'
-import { DateProvider } from '../../ports/date'
-import { Hashing } from '../../ports/hasher'
-import { TokenProvider } from '../../ports/token'
-import { UserPresenters } from '../../presenter/user.present'
-import { UseCase } from '../usecase'
+import { UseCase } from '@/application/usecases/usecase'
+import { TokenGateway } from '@/application/gateways/token.gateway'
+import { UserGateway } from '@/application/gateways/user.gateway'
+import { AuthUserInputDto, AuthUserOutputDto } from '@/application/dto/user/auth-user.dto'
+import { InvalidCredentialsError } from '@/application/errors/invalid-credentials-error'
+import { DateProvider } from '@/application/ports/out/date'
+import { Hashing } from '@/application/ports/out/hasher'
+import { TokenProvider } from '@/application/ports/out/token'
+import { UserPresenters } from '@/application/ports/in/user.present'
+import { env } from '@/config/env'
 
 export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutputDto>{
   private constructor(

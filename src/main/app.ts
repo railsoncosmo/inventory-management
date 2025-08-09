@@ -1,11 +1,11 @@
-import { AppDataSource } from '../package/typeorm/data-source'
-import { ApiExpress } from '../infra/http/api/express/api.express'
+import { AppDataSource } from '@/package/typeorm/data-source'
+import { ApiExpress } from '@/infrastructure/http/api/express/api.express'
 
-import { createRepositories } from '../infra/database/repository-container'
+import { createRepositories } from '@/infrastructure/database/repository-container'
 
-import { BcryptHash } from '../infra/services/bcrypt'
-import { JwtToken } from '../infra/services/jwt'
-import { DayJs } from '../infra/services/dayjs'
+import { BcryptHash } from '@/infrastructure/services/bcrypt'
+import { JwtToken } from '@/infrastructure/services/jwt'
+import { DayJs } from '@/infrastructure/services/dayjs'
 
 import { userRoutes } from './container/user'
 import { tokenRoutes } from './container/refresh-token'
