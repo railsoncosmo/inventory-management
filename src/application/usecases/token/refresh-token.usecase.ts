@@ -1,7 +1,6 @@
 import { TokenGateway } from '../../../core/domain/entities/token/token.gateway'
 import { RefreshTokenInputDto, RefreshTokenOutputDto } from '../../dto/user/create-user-token.dto'
-import { TokenGenerator } from '../../ports/token'
-import { TokenVerifier } from '../../ports/token'
+import { TokenProvider } from '../../ports/token'
 import { UseCase } from '../usecase'
 import { RefreshTokenNotExists } from '../../errors/refesh-token-not-exists-error'
 import { DateProvider } from '../../ports/date'
@@ -17,29 +16,26 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
   private constructor(
     private readonly tokenGateway: TokenGateway,
     private readonly userPresenters: UserPresenters,
-    private readonly tokenVerifier: TokenVerifier,
-    private readonly tokenGenerator: TokenGenerator,
+    private readonly tokenProvider: TokenProvider,
     private readonly dateProvider: DateProvider,
   ){}
 
   public static create(
     tokenGateway: TokenGateway,
     userPresenters: UserPresenters,
-    tokenVerifier: TokenVerifier,
-    tokenGenerator: TokenGenerator,
+    tokenProvider: TokenProvider,
     dateProvider: DateProvider,
   ){
     return new RefreshTokenUseCase(
       tokenGateway,
       userPresenters,
-      tokenVerifier,
-      tokenGenerator,
+      tokenProvider,
       dateProvider,
     )
   }
 
   async execute({ token }: RefreshTokenInputDto): Promise<RefreshTokenOutputDto> {
-    const { sub } = await this.tokenVerifier.verifyToken(token) as unknown as Payload
+    const { sub } = await this.tokenProvider.verifyToken(token) as unknown as Payload
     const user_id = sub
 
     const userToken = await this.tokenGateway.findByUserIdAndRefreshToken(user_id, token)
@@ -49,11 +45,11 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
 
     await this.tokenGateway.deleteByTokenId(userToken.id)
 
-    const newAccessToken = await this.tokenGenerator.generateAccessToken({
+    const newAccessToken = await this.tokenProvider.generateAccessToken({
       sub: userToken.id,
     })
     
-    const refresh_token = await this.tokenGenerator.generateRefreshToken({
+    const refresh_token = await this.tokenProvider.generateRefreshToken({
       sub: sub,
     })
     

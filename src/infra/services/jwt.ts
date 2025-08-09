@@ -1,8 +1,8 @@
-import { TokenGenerator, TokenVerifier } from '../../application/ports/token'
+import { TokenProvider } from '../../application/ports/token'
 import { env } from '../../config/env'
 import jwt from 'jsonwebtoken'
 
-export class JwtToken implements TokenGenerator, TokenVerifier {
+export class JwtToken implements TokenProvider {
   constructor(
     private readonly secret_token = env.JWT_SECRET,
     private readonly secret_refresh_token = env.REFRESH_TOKEN_SECRET

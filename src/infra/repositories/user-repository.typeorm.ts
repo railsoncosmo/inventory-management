@@ -3,7 +3,6 @@ import { User as UserORM } from '../database/typeorm/entities/User'
 import { User } from '../../core/domain/entities/user/user.entity'
 import { UserGateway } from '../../core/domain/entities/user/user.gateway'
 import { UserRole } from '../../core/domain/enums/roles'
-//import { UserMapper } from '../mappers/user.mapper'
 
 export class UserTypeormRepository implements UserGateway {
   constructor(private readonly userRepository: Repository<UserORM>) {}
@@ -43,14 +42,4 @@ export class UserTypeormRepository implements UserGateway {
     if (!user) return null
     return User.withUser(user)
   }
-
-  // async getUserProfile(userId: string): Promise<User  | null> {
-  //   const user = await this.repository.findOne({ 
-  //     where: { 
-  //       id: userId 
-  //     } 
-  //   })
-  //   if (!user) return null
-  //   return UserMapper.userProfileDTO(user)
-  // }
 }

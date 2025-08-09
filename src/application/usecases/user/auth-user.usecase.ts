@@ -5,7 +5,7 @@ import { AuthUserInputDto, AuthUserOutputDto } from '../../dto/user/auth-user.dt
 import { InvalidCredentialsError } from '../../errors/invalid-credentials-error'
 import { DateProvider } from '../../ports/date'
 import { Hashing } from '../../ports/hasher'
-import { TokenGenerator } from '../../ports/token'
+import { TokenProvider } from '../../ports/token'
 import { UserPresenters } from '../../presenter/user.present'
 import { UseCase } from '../usecase'
 
@@ -14,7 +14,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
     private readonly userGateway: UserGateway,
     private readonly encrypter: Hashing,
     private readonly userPresenters: UserPresenters,
-    private readonly tokenGenerator: TokenGenerator,
+    private readonly tokenProvider: TokenProvider,
     private readonly tokenGateway: TokenGateway,
     private readonly dateProvider: DateProvider,
   ){}
@@ -23,7 +23,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
     userGateway: UserGateway, 
     encrypter: Hashing, 
     userPresenters: UserPresenters, 
-    tokenGenerator: TokenGenerator, 
+    tokenProvider: TokenProvider, 
     tokenGateway: TokenGateway,
     dateProvider: DateProvider
   ){
@@ -31,7 +31,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       userGateway, 
       encrypter, 
       userPresenters, 
-      tokenGenerator, 
+      tokenProvider, 
       tokenGateway,
       dateProvider
     )
@@ -49,11 +49,11 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       throw new InvalidCredentialsError()
     }
 
-    const accessToken = await this.tokenGenerator.generateAccessToken({
+    const accessToken = await this.tokenProvider.generateAccessToken({
       sub: user.id,
     })
 
-    const refreshToken = await this.tokenGenerator.generateRefreshToken({
+    const refreshToken = await this.tokenProvider.generateRefreshToken({
       sub: user.id,
     })
 

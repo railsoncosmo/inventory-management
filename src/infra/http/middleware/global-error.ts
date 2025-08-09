@@ -8,10 +8,7 @@ export const globalError = (
   res: Response,
   _next: NextFunction
 ) => {
-
-  // if (res.headersSent) {
-  //   return _next(error)
-  // }
+  
   console.log(error)
 
   if (error instanceof ZodError) {

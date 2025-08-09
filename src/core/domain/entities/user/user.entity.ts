@@ -8,7 +8,7 @@ export type UserProps = {
   image_url?: string
   role: string
   created_at?: Date
-  updated_at?: Date
+  updated_at?: Date | null
 }
 
 export class User {
@@ -27,14 +27,19 @@ export class User {
     })
   }
 
-  public static userAuth(props: UserProps){
-    return new User({
-      ...props
-    })
-  }
-
   public static withUser(props: UserProps){
     return new User(props)
+  }
+
+  public withUserPublic(){
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      image_url: this.props.image_url ?? null,
+      role: this.role,
+    }
   }
 
   private validateUserRole(){

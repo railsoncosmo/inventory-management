@@ -15,13 +15,12 @@ export async function server(){
 
   const repositories = createRepositories(dataSource)
   const encrypter = BcryptHash.create()
-  const tokenVerifier = new JwtToken()
-  const tokenGenerator = new JwtToken()
+  const tokenProvider = new JwtToken()
   const dateProvider = new DayJs()
 
   const routes = [
-    ...userRoutes({ repositories, encrypter, tokenGenerator, dateProvider }),
-    ...tokenRoutes({ repositories, tokenGenerator, dateProvider, tokenVerifier })
+    ...userRoutes({ repositories, encrypter, tokenProvider, dateProvider }),
+    ...tokenRoutes({ repositories, tokenProvider, dateProvider })
   ]
   const api = ApiExpress.create(routes)
 

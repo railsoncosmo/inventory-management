@@ -1,5 +1,5 @@
 import { CreateUserHttpPresenters } from '../../presentation/user-http.presenter'
-import { TokenGenerator, TokenVerifier } from '../../application/ports/token'
+import { TokenProvider } from '../../application/ports/token'
 import { TokenGateway } from '../../core/domain/entities/token/token.gateway'
 import { DateProvider } from '../../application/ports/date'
 import { RefreshTokenUseCase } from '../../application/usecases/token/refresh-token.usecase'
@@ -9,17 +9,16 @@ interface RefreshComposer {
   repositories: { 
     tokenRepository: TokenGateway
   }
-  tokenVerifier: TokenVerifier
-  tokenGenerator: TokenGenerator
+  tokenProvider: TokenProvider
   dateProvider: DateProvider
 }
 
-export function tokenRoutes({ repositories, tokenGenerator, dateProvider, tokenVerifier }: RefreshComposer) {
+export function tokenRoutes({ repositories, tokenProvider, dateProvider }: RefreshComposer) {
   const userPresenter = new CreateUserHttpPresenters()
 
   const { tokenRepository } = repositories
 
-  const refreshTokenUseCase = RefreshTokenUseCase.create(tokenRepository, userPresenter, tokenVerifier, tokenGenerator, dateProvider)
+  const refreshTokenUseCase = RefreshTokenUseCase.create(tokenRepository, userPresenter, tokenProvider, dateProvider)
   const refreshTokebRoute = RefreshTokenRoute.create(refreshTokenUseCase, userPresenter)
 
   return [refreshTokebRoute]

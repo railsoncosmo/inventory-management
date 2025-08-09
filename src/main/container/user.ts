@@ -6,7 +6,7 @@ import { AuthUserRoute } from '../../infra/http/api/routes/user/auth-user.expres
 
 import { CreateUserHttpPresenters } from '../../presentation/user-http.presenter'
 import { UserGateway } from '../../core/domain/entities/user/user.gateway'
-import { TokenGenerator } from '../../application/ports/token'
+import { TokenProvider } from '../../application/ports/token'
 import { Hashing } from '../../application/ports/hasher'
 import { TokenGateway } from '../../core/domain/entities/token/token.gateway'
 import { DateProvider } from '../../application/ports/date'
@@ -17,11 +17,11 @@ interface UserComposer {
     tokenRepository: TokenGateway
   }
   encrypter: Hashing
-  tokenGenerator: TokenGenerator
+  tokenProvider: TokenProvider
   dateProvider: DateProvider
 }
 
-export function userRoutes({ repositories, encrypter, tokenGenerator, dateProvider }: UserComposer) {
+export function userRoutes({ repositories, encrypter, tokenProvider, dateProvider }: UserComposer) {
   const userPresenter = new CreateUserHttpPresenters()
 
   const { userRepository, tokenRepository } = repositories
@@ -31,7 +31,7 @@ export function userRoutes({ repositories, encrypter, tokenGenerator, dateProvid
     userRepository,
     encrypter,
     userPresenter,
-    tokenGenerator,
+    tokenProvider,
     tokenRepository,
     dateProvider,
   )
