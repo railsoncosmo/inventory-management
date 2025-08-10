@@ -1,6 +1,6 @@
-import { defineAbilityFor } from '@/auth/rbac/index'
-import { userSchema } from '@/auth/rbac/models/user'
-import { Role } from '@/auth/rbac/roles'
+import { defineAbilityFor } from '@/infrastructure/rbac/index'
+import { userSchema } from '@/infrastructure/rbac/models/user'
+import { Role } from '@/infrastructure/rbac/roles'
 
 
 export function getUserPermission(userId: string, role: Role){

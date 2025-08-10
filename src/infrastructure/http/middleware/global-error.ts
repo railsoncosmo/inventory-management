@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { Exception } from '@/core/entities/exception'
+import { Exception } from '@/domain/errors/exception'
 import { ZodError } from 'zod'
 
 export const globalError = (

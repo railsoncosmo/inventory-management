@@ -1,4 +1,4 @@
-import { Exception } from '@/core/entities/exception'
+import { Exception } from '@/domain/errors/exception'
 
 export class InvalidCredentialsError extends Exception {
   constructor(){

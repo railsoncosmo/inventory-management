@@ -1,5 +1,5 @@
-import { CreateUserTokenDto } from '@/application/dto/user/create-user-token.dto'
-import { Token } from '@/domain/entities/token.entity'
+import { CreateUserTokenDto } from '@/domain/dto/user/create-user-token.dto'
+import { Token } from '@/domain/users/enterprise/entities/token.entity'
 
 export interface TokenGateway {
   create({ expires_date, refresh_token, user_id }: CreateUserTokenDto): Promise<Token>

@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import { Hashing } from '@/application/ports/out/hasher'
+import { Hashing } from '@/domain/ports/out/hasher'
 
 export class BcryptHash implements Hashing {
   private constructor(private readonly salt: number = 6){}

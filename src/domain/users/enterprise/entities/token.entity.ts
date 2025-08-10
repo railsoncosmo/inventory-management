@@ -1,4 +1,5 @@
-export type TokenProps = {
+
+interface TokenProps {
   id: string
   user_id: string
   expires_date: Date
@@ -7,22 +8,21 @@ export type TokenProps = {
 }
 
 export class Token {
-  private constructor(private props: TokenProps){
-  }
+  private constructor(private props: TokenProps){}
 
   public static create(expires_date: Date, refresh_token: string, user_id: string){
     return new Token({
       id: crypto.randomUUID(),
-      expires_date,
+      user_id,
       refresh_token,
-      user_id
+      expires_date,
     })
   }
 
   public static withToken(props: TokenProps){
     return new Token(props)
   }
-
+  
   public get id(){
     return this.props.id
   }

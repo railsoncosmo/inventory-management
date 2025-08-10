@@ -1,12 +1,12 @@
-import { UseCase } from '@/application/usecases/usecase'
-import { TokenGateway } from '@/application/gateways/token.gateway'
-import { UserGateway } from '@/application/gateways/user.gateway'
-import { AuthUserInputDto, AuthUserOutputDto } from '@/application/dto/user/auth-user.dto'
-import { InvalidCredentialsError } from '@/application/errors/invalid-credentials-error'
-import { DateProvider } from '@/application/ports/out/date'
-import { Hashing } from '@/application/ports/out/hasher'
-import { TokenProvider } from '@/application/ports/out/token'
-import { UserPresenters } from '@/application/ports/in/user.present'
+import { UseCase } from './usecase'
+import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
+import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
+import { AuthUserInputDto, AuthUserOutputDto } from '@/domain/dto/user/auth-user.dto'
+import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
+import { DateProvider } from '@/domain/ports/out/date'
+import { Hashing } from '@/domain/ports/out/hasher'
+import { TokenProvider } from '@/domain/ports/out/token'
+import { UserPresenters } from '@/domain/ports/in/user.present'
 import { env } from '@/config/env'
 
 export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutputDto>{
@@ -49,11 +49,11 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       throw new InvalidCredentialsError()
     }
 
-    const accessToken = await this.tokenProvider.generateAccessToken({
+    const newAccessToken  = await this.tokenProvider.generateAccessToken({
       sub: user.id,
     })
 
-    const refreshToken = await this.tokenProvider.generateRefreshToken({
+    const refresh_token = await this.tokenProvider.generateRefreshToken({
       sub: user.id,
     })
 
@@ -63,10 +63,10 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
 
     await this.tokenGateway.create({
       user_id: user.id,
-      refresh_token: refreshToken,
-      expires_date: expiresRefreshToken,
+      refresh_token,
+      expires_date: expiresRefreshToken
     })
 
-    return this.userPresenters.presentAuthUser(accessToken, refreshToken)
+    return this.userPresenters.presentAuthUser(newAccessToken, refresh_token)
   }
 }

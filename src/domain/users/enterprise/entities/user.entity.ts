@@ -1,5 +1,6 @@
+import { UserRole } from '@/domain/enums/roles'
 
-export type UserProps = {
+interface UserProps {
   id: string
   name: string
   email: string
@@ -31,54 +32,56 @@ export class User {
     return new User(props)
   }
 
-  public withUserPublic(){
-    return {
-      id: this.id,
-      name: this.name,
-      email: this.email,
-      phone: this.phone,
-      image_url: this.props.image_url ?? null,
-      role: this.role,
-    }
-  }
-
   private validateUserRole(){
-    const roles = ['ADMIN', 'USER']
+    const roles = Object.values(UserRole) as string[]
     if (!roles.includes(this.props.role)){
       throw new Error('Cargo de usuário inválido.')
     }
   }
 
-  public changeRole(newRole: string){
-    if(this.props.role === newRole){
-      throw new Error('O usuário já pertence a esse cargo.')
-    }
-    this.props.role = newRole
-    this.props.updated_at = new Date()
-  }
-  
   public get id(){
     return this.props.id
   }
 
-  public get name(){
+  get name(){
     return this.props.name
   }
 
-  public get email(){
+  get email(){
     return this.props.email
   }
 
-  public get password(){
+  get password(){
     return this.props.password
   }
 
-  public get phone(){
+  get phone(){
     return this.props.phone
   }
 
-  public get role(){
+  get image_url(){
+    return this.props.image_url ?? ''
+  }
+
+  get role(){
     return this.props.role
   }
 
+  get created_at(){
+    return this.props.created_at
+  }
+
+  private updated(){
+    this.props.updated_at = new Date()
+  }
+
+  set phone(phone: string){
+    this.props.phone = phone
+    this.updated()
+  }
+
+  set image_url(image: string){
+    this.props.image_url = image
+    this.updated()
+  }
 }

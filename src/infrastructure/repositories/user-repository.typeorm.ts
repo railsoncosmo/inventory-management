@@ -1,8 +1,9 @@
 import { Repository } from 'typeorm'
-import { User } from '@/domain/entities/user.entity'
+import { User } from '@/domain/users/enterprise/entities/user.entity'
 import { UserRole } from '@/domain/enums/roles'
-import { UserGateway } from '@/application/gateways/user.gateway'
+import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
 import { User as UserORM } from '../database/typeorm/entities/User'
+import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 export class UserTypeormRepository implements UserGateway {
   constructor(private readonly userRepository: Repository<UserORM>) {}
@@ -13,7 +14,6 @@ export class UserTypeormRepository implements UserGateway {
 
   async save(user: User): Promise<void> {
     const data = {
-      id: user.id,
       name: user.name,
       email: user.email,
       password: user.password,
@@ -38,6 +38,17 @@ export class UserTypeormRepository implements UserGateway {
       where: { 
         email 
       } 
+    })
+    if (!user) return null
+    return User.withUser(user)
+  }
+
+  async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {
+    const user = await this.userRepository.findOne({ 
+      where: { 
+        id: user_id
+      },
+      select: ['name', 'email', 'phone', 'image_url', 'role', 'created_at']
     })
     if (!user) return null
     return User.withUser(user)

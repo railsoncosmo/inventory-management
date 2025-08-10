@@ -1,13 +1,9 @@
 import { Request, Response } from 'express'
-import { CreateUserUseCase } from '@/application/usecases/user/create-user.usecase'
+import { CreateUserUseCase } from '@/domain/users/application/usecases/create-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
-import { CreateUserInputDto } from '@/application/dto/user/create-user.dto'
+import { CreateUserInputDto } from '@/domain/dto/user/create-user.dto'
 import { createUserBodySchema } from '@/shared/validators/create-user-body-schema'
-import { UserAlreadyExistsError } from '@/application/errors/user-already-exists-error'
-
-export type CreateUserResponseDto = {
-  id: string
-}
+import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
 
 export class CreateUserRoute implements Routes {
   private constructor(

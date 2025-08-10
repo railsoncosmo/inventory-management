@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
-import { AuthUserUseCase } from '@/application/usecases/user/auth-user.usecase'
+import { AuthUserUseCase } from '@/domain/users/application/usecases/auth-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
 import { authUserBodySchema } from '@/shared/validators/auth-user-body-schema'
-import { AuthUserInputDto } from '@/application/dto/user/auth-user.dto'
-import { InvalidCredentialsError } from '@/application/errors/invalid-credentials-error'
-import { CreateUserHttpPresenters } from '@/presentation/user-http.presenter'
+import { AuthUserInputDto } from '@/domain/dto/user/auth-user.dto'
+import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
+import { UserHttpPresenters } from '@/presentation/user-http.presenter'
 
 export type CreateUserResponseDto = {
   id: string
@@ -15,11 +15,11 @@ export class AuthUserRoute implements Routes {
     private readonly path: string,
     private readonly method: HttpMethod,
     private readonly authUserUseCase: AuthUserUseCase,
-    private readonly createUserHttpPresenters: CreateUserHttpPresenters,
+    private readonly createUserHttpPresenters: UserHttpPresenters,
     
   ){}
 
-  public static create(authUserUseCase: AuthUserUseCase, createUserHttpPresenters: CreateUserHttpPresenters){
+  public static create(authUserUseCase: AuthUserUseCase, createUserHttpPresenters: UserHttpPresenters){
     return new AuthUserRoute(
       '/session',
       httpMethod.POST,

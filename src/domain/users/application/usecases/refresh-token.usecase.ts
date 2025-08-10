@@ -1,10 +1,10 @@
-import { UseCase } from '@/application/usecases/usecase'
-import { TokenGateway } from '@/application/gateways/token.gateway'
-import { TokenProvider } from '@/application/ports/out/token'
-import { DateProvider } from '@/application/ports/out/date'
-import { UserPresenters } from '@/application/ports/in/user.present'
-import { RefreshTokenInputDto, RefreshTokenOutputDto } from '@/application/dto/user/create-user-token.dto'
-import { RefreshTokenNotExists } from '@/application/errors/refesh-token-not-exists-error'
+import { UseCase } from './usecase'
+import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
+import { TokenProvider } from '@/domain/ports/out/token'
+import { DateProvider } from '@/domain/ports/out/date'
+import { UserPresenters } from '@/domain/ports/in/user.present'
+import { RefreshTokenInputDto, RefreshTokenOutputDto } from '@/domain/dto/user/create-user-token.dto'
+import { RefreshTokenNotExists } from '@/domain/errors/refesh-token-not-exists-error'
 import { env } from '@/config/env'
 
 

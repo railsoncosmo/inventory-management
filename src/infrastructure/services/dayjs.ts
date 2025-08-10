@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { DateProvider } from '@/application/ports/out/date'
+import { DateProvider } from '@/domain/ports/out/date'
 
 export class DayJs implements DateProvider {
   addDays(days: number): Date {

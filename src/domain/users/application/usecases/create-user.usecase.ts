@@ -1,9 +1,9 @@
-import { User } from '@/domain/entities/user.entity'
-import { UserGateway } from '@/application/gateways/user.gateway'
-import { UseCase } from '@/application/usecases/usecase'
-import { UserAlreadyExistsError } from '@/application/errors/user-already-exists-error'
-import { Hashing } from '@/application/ports/out/hasher'
-import { CreateUserInputDto, CreateUserOutputDto } from '@/application/dto/user/create-user.dto'
+import { UseCase } from './usecase'
+import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
+import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
+import { Hashing } from '@/domain/ports/out/hasher'
+import { CreateUserInputDto, CreateUserOutputDto } from '@/domain/dto/user/create-user.dto'
 
 export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUserOutputDto> {
   private constructor(

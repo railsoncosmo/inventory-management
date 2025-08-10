@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { TokenProvider } from '@/application/ports/out/token'
+import { TokenProvider } from '@/domain/ports/out/token'
 import { env } from '@/config/env'
 
 export class JwtToken implements TokenProvider {
