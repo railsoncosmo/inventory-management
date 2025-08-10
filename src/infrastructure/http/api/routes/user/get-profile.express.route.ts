@@ -1,8 +1,9 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { httpMethod, HttpMethod, Routes } from '../routes'
 import { GetProfileUsecase } from '@/domain/users/application/usecases/get-profile.usecase'
-import { NotFoundError } from '@/domain/errors/not-found-error'
 import { UserHttpPresenters } from '@/presentation/user-http.presenter'
+import { authentication } from '@/infrastructure/http/middleware/auth'
+import { UnauthorizedError } from '@/domain/errors/unauthorized-error'
 
 export class GetProfileUserRoute implements Routes{
   private constructor(
@@ -23,19 +24,16 @@ export class GetProfileUserRoute implements Routes{
   
   getHandler() {
     return async (req: Request, res: Response) => {
-      try {
-        const currentUser = req.user_id
+      const currentUser = req.user_id
 
-        const user = await this.getProfileUseCase.execute({ user_id: currentUser })
-
-        await this.userHttpPresenters.presentCurrentProfile(user)
-
-        res.status(200).json(user)
-      } catch (error) {
-        if(error instanceof NotFoundError){
-          res.status(404).json({ message: error.message })
-        }
+      if(!currentUser){
+        throw new UnauthorizedError('Usuário não autenticado')
       }
+
+      const user = await this.getProfileUseCase.execute({ user_id: currentUser })
+      await this.userHttpPresenters.presentCurrentProfile(user)
+
+      res.status(200).json(user)
     }
   }
 
@@ -44,5 +42,9 @@ export class GetProfileUserRoute implements Routes{
   }
   getMethod(): HttpMethod {
     return this.method
+  }
+
+  getMiddlewares(): Array<(req: Request, res: Response, next: NextFunction) => void> {
+    return [authentication]
   }
 }

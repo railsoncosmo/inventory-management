@@ -35,7 +35,7 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, Refres
   }
 
   async execute({ token }: RefreshTokenInputDto): Promise<RefreshTokenOutputDto> {
-    const { sub } = await this.tokenProvider.verifyToken(token) as unknown as Payload
+    const { sub } = await this.tokenProvider.verifyAccessToken(token) as unknown as Payload
     const user_id = sub
 
     const userToken = await this.tokenGateway.findByUserIdAndRefreshToken(user_id, token)

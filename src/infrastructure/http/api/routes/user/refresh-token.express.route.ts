@@ -27,32 +27,25 @@ export class RefreshTokenRoute implements Routes {
 
   getHandler() {
     return async (req: Request, res: Response) => {
-      try {
-        const token = 
+      const token = 
         req.body.token || 
         req.headers['x-access-token'] ||
         req.query.token
       
-        if(!token){
-          throw new NotFoundError('Token não encontrado.')
-        }
-
-        const refresh_token = await this.refreshTokenUseCase.execute({ token })
-        await this.createUserHttpPresenters.presentRefreshToken(refresh_token)
-        res
-          .cookie('refresh_token', refresh_token, {
-            path: '/',
-            secure: true,
-            sameSite: true,
-            httpOnly: true })
-          .status(200)
-          .json({ refresh_token })
-          
-      } catch(error) {
-        if (error instanceof NotFoundError) {
-          res.status(404).json({ message: error.message })
-        } 
+      if(!token){
+        throw new NotFoundError('Token não encontrado.')
       }
+
+      const refresh_token = await this.refreshTokenUseCase.execute({ token })
+      await this.createUserHttpPresenters.presentRefreshToken(refresh_token)
+      res
+        .cookie('refresh_token', refresh_token, {
+          path: '/',
+          secure: true,
+          sameSite: true,
+          httpOnly: true })
+        .status(200)
+        .json(refresh_token)
     }
   }
   getPath(): string {

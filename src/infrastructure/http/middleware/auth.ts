@@ -1,15 +1,17 @@
 import { Request, Response,NextFunction } from 'express'
-import { verify } from 'jsonwebtoken'
 import { env } from '@/config/env'
+import { verify, JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
+import { ForbiddenError } from '@/domain/errors/forbidden-error'
 
 interface Payload {
-    sub: string
+  sub: string
+  type: 'access' | 'refresh'
 }
 
 export function authentication(req: Request, res: Response, next: NextFunction){
 
   if(!req.headers.authorization){
-    return res.status(401).end({ message: 'Token de acesso não fornecido.' })
+    return res.status(401).json({ message: 'Credenciais inválidas.' })
   }
 
   const authtoken = req.headers.authorization
@@ -17,12 +19,23 @@ export function authentication(req: Request, res: Response, next: NextFunction){
   const [, token] = authtoken.split(' ')
 
   try {
-    const { sub } = verify(token, env.JWT_SECRET) as Payload
+    const payload = verify(token, env.JWT_SECRET) as Payload
 
-    req.user_id = sub
+    if (payload.type !== 'access') {
+      return res.status(403).json({ message: 'Tipo de token inválido para acessar esta rota.' })
+    }
+
+    req.user_id = payload.sub
 
     return next()
-  } catch {
-    return res.status(401).json({ message: 'Token de acesso inválido ou expirado.' })
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      return res.status(401).json({ message: 'Token expirado.' })
+    }
+    if (error instanceof JsonWebTokenError) {
+      return res.status(401).json({ message: 'Token inválido.' })
+    }
+
+    throw new ForbiddenError('Erro de autenticação.')
   }
 }

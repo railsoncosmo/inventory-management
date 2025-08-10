@@ -25,7 +25,7 @@ export class TokenTypeormRepository implements TokenGateway {
   async findByUserIdAndRefreshToken(user_id: string, refresh_token: string): Promise<Token | null> {
     const userToken = await this.tokenRepository.findOne({
       where: {
-        user_id: user_id.toString(),
+        user_id: user_id,
         refresh_token,
       }
     })
