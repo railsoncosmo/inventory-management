@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 import { UserRole } from '@/domain/enums/roles'
 import { Transaction } from './Transaction'
 import { Product } from './Product'
@@ -7,7 +7,7 @@ import { Token } from './Token'
 @Entity('users')
 export class User {
   
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('uuid')
     id: string
 
   @Column('varchar')

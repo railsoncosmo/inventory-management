@@ -1,30 +1,23 @@
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityId } from './value-objects/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 interface TokenProps {
-  id: string
   user_id: string
   expires_date: Date
   refresh_token: string
-  created_at?: Date
+  created_at: Date
 }
 
-export class Token {
-  private constructor(private props: TokenProps){}
+export class Token extends Entity<TokenProps> {
 
-  public static create(expires_date: Date, refresh_token: string, user_id: string){
-    return new Token({
-      id: crypto.randomUUID(),
-      user_id,
-      refresh_token,
-      expires_date,
-    })
-  }
+  public static create(props: Optional<TokenProps, 'created_at'>, id?: UniqueEntityId){
+    const token = new Token({
+      ...props,
+      created_at: new Date()
+    }, id)
 
-  public static withToken(props: TokenProps){
-    return new Token(props)
-  }
-  
-  public get id(){
-    return this.props.id
+    return token
   }
 
   public get user_id(){

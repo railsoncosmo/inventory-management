@@ -27,16 +27,13 @@ export class RefreshTokenRoute implements Routes {
 
   getHandler() {
     return async (req: Request, res: Response) => {
-      const token = 
-        req.body.token || 
-        req.headers['x-access-token'] ||
-        req.query.token
+      const token = req.body.token || req.headers['x-access-token'] || req.query.token || req.cookies['refresh_token']
       
       if(!token){
-        throw new NotFoundError('Token não encontrado.')
+        throw new NotFoundError('Token não encontrado ou inválido.')
       }
-
-      const refresh_token = await this.refreshTokenUseCase.execute({ token })
+      
+      const refresh_token = await this.refreshTokenUseCase.execute({token})
       await this.createUserHttpPresenters.presentRefreshToken(refresh_token)
       res
         .cookie('refresh_token', refresh_token, {

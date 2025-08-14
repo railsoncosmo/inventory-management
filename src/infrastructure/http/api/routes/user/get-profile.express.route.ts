@@ -31,7 +31,7 @@ export class GetProfileUserRoute implements Routes{
       }
 
       const user = await this.getProfileUseCase.execute({ user_id: currentUser })
-      await this.userHttpPresenters.presentCurrentProfile(user)
+      await this.userHttpPresenters.presentCurrentProfile(user.user)
 
       res.status(200).json(user)
     }

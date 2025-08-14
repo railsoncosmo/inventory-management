@@ -49,24 +49,23 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       throw new InvalidCredentialsError()
     }
 
-    const newAccessToken  = await this.tokenProvider.generateAccessToken({
-      sub: user.id,
+    const accessToken  = await this.tokenProvider.generateAccessToken({
+      sub: user.id.toString(),
     })
 
     const refresh_token = await this.tokenProvider.generateRefreshToken({
-      sub: user.id,
+      sub: user.id.toString(),
     })
 
     const expiresRefreshToken = this.dateProvider.addDays(env.EXPIRES_REFRESH_TOKEN_DAYS)
-
-    await this.tokenGateway.deleteAllByUserId(user.id)
+    await this.tokenGateway.deleteAllByUserId(user.id.toString())
 
     await this.tokenGateway.create({
-      user_id: user.id,
+      user_id: user.id.toString(),
       refresh_token,
       expires_date: expiresRefreshToken
     })
 
-    return this.userPresenters.presentAuthUser(newAccessToken, refresh_token)
+    return await this.userPresenters.presentAuthUser(accessToken, refresh_token)
   }
 }

@@ -1,6 +1,8 @@
+import { AccessTokenPayload, RefreshTokenPayload } from '@/core/types/base-token'
+
 export interface TokenProvider {
-  generateAccessToken(payload: Record<string, unknown>): Promise<string>
-  generateRefreshToken(payload: Record<string, unknown>): Promise<string>
-  verifyAccessToken(token: string): Promise<Record<string, unknown>>
-  verifyAccessToken(token: string): Promise<Record<string, unknown>>
+  generateAccessToken(payload: Omit<AccessTokenPayload, 'iat' | 'exp' | 'type'>): Promise<string>
+  generateRefreshToken(payload: Omit<RefreshTokenPayload, 'iat' | 'exp' | 'type'>): Promise<string>
+  verifyAccessToken(token: string): Promise<AccessTokenPayload>
+  verifyRefreshToken(token: string): Promise<RefreshTokenPayload>
 }

@@ -21,6 +21,10 @@ export class GetProfileUsecase implements UseCase<GetProfileInputDto, GetProfile
       throw new BadRequestError('Usuário não encontrado')
     }
 
-    return await this.userPresenters.presentCurrentProfile(user)
+    await this.userPresenters.presentCurrentProfile(user)
+
+    return {
+      user
+    }
   }
 }

@@ -4,6 +4,8 @@ import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
 import { Hashing } from '@/domain/ports/out/hasher'
 import { CreateUserInputDto, CreateUserOutputDto } from '@/domain/dto/user/create-user.dto'
+import { Email } from '../../enterprise/entities/value-objects/email'
+import { Role } from '../../enterprise/entities/value-objects/role'
 
 export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUserOutputDto> {
   private constructor(
@@ -30,7 +32,15 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
       throw new UserAlreadyExistsError()
     }
 
-    const user = User.create(name, email, passwordHashed, phone, role)
-    return await this.userGateway.save(user)
+    const user = User.create({
+      name,
+      email: new Email(email),
+      password: passwordHashed,
+      phone,
+      role: new Role(role),
+    })
+    await this.userGateway.save(user)
+
+    return { user }
   }
 }

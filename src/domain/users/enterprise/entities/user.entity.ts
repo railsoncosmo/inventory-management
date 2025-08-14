@@ -1,54 +1,39 @@
-import { UserRole } from '@/domain/enums/roles'
+import { Email } from './value-objects/email'
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityId } from './value-objects/unique-entity-id'
+import { Role } from './value-objects/role'
+import { Optional } from '@/core/types/optional'
 
 interface UserProps {
-  id: string
   name: string
-  email: string
+  email: Email
   password: string
   phone: string
+  role: Role
   image_url?: string
-  role: string
-  created_at?: Date
+  created_at: Date
   updated_at?: Date | null
 }
 
-export class User {
-  private constructor(private props: UserProps){
-    this.validateUserRole()
-  }
+export class User extends Entity<UserProps> {
+  
+  public static create(props: Optional<UserProps, 'created_at'>, id?: UniqueEntityId){
+    const user = new User({
+      ...props,
+      email: new Email(props.email.value),
+      role: new Role(props.role.value),
+      created_at: props.created_at ?? new Date()
+    }, id)
 
-  public static create(name: string, email: string, password: string, phone: string, role: string){
-    return new User({
-      id: crypto.randomUUID(),
-      name,
-      email,
-      password,
-      phone,
-      role,
-    })
-  }
-
-  public static withUser(props: UserProps){
-    return new User(props)
-  }
-
-  private validateUserRole(){
-    const roles = Object.values(UserRole) as string[]
-    if (!roles.includes(this.props.role)){
-      throw new Error('Cargo de usuário inválido.')
-    }
-  }
-
-  public get id(){
-    return this.props.id
+    return user
   }
 
   get name(){
     return this.props.name
   }
 
-  get email(){
-    return this.props.email
+  get email() {
+    return this.props.email.value
   }
 
   get password(){
@@ -59,12 +44,12 @@ export class User {
     return this.props.phone
   }
 
-  get image_url(){
-    return this.props.image_url ?? ''
+  get role() {
+    return this.props.role.value
   }
 
-  get role(){
-    return this.props.role
+  get image_url(){
+    return this.props.image_url ?? ''
   }
 
   get created_at(){

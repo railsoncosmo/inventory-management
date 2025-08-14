@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm'
 import { User } from '@/domain/users/enterprise/entities/user.entity'
-import { UserRole } from '@/domain/enums/roles'
 import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
 import { User as UserORM } from '../database/typeorm/entities/User'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
+import { UserRole } from '@/domain/enums/roles'
+import { TypeormUserMapper } from '../database/typeorm/mappers/typeorm-user-mapper'
 
 export class UserTypeormRepository implements UserGateway {
   constructor(private readonly userRepository: Repository<UserORM>) {}
@@ -14,6 +14,7 @@ export class UserTypeormRepository implements UserGateway {
 
   async save(user: User): Promise<void> {
     const data = {
+      id: user.id.toString(),
       name: user.name,
       email: user.email,
       password: user.password,
@@ -40,10 +41,10 @@ export class UserTypeormRepository implements UserGateway {
       } 
     })
     if (!user) return null
-    return User.withUser(user)
+    return TypeormUserMapper.toDomain(user)
   }
 
-  async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {
+  async getCurrentUser(user_id: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ 
       where: { 
         id: user_id
@@ -51,6 +52,6 @@ export class UserTypeormRepository implements UserGateway {
       select: ['name', 'email', 'phone', 'image_url', 'role', 'created_at']
     })
     if (!user) return null
-    return User.withUser(user)
+    return TypeormUserMapper.toDomain(user)
   }
 }
