@@ -3,7 +3,7 @@ import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
 import { DateProvider } from '@/domain/ports/out/date'
 import { RefreshTokenUseCase } from '@/domain/users/application/usecases/refresh-token.usecase'
 import { RefreshTokenRoute } from '@/infrastructure/http/api/routes/user/refresh-token.express.route'
-import { UserHttpPresenters } from '@/presentation/user-http.presenter'
+import { Hashing } from '@/domain/ports/out/hasher'
 
 interface RefreshComposer {
   repositories: { 
@@ -11,15 +11,15 @@ interface RefreshComposer {
   }
   tokenProvider: TokenProvider
   dateProvider: DateProvider
+  encrypter: Hashing
 }
 
-export function tokenRoutes({ repositories, tokenProvider, dateProvider }: RefreshComposer) {
-  const userPresenter = new UserHttpPresenters()
+export function tokenRoutes({ repositories, encrypter ,tokenProvider, dateProvider }: RefreshComposer) {
 
   const { tokenRepository } = repositories
 
-  const refreshTokenUseCase = RefreshTokenUseCase.create(tokenRepository, userPresenter, tokenProvider, dateProvider)
-  const refreshTokebRoute = RefreshTokenRoute.create(refreshTokenUseCase, userPresenter)
+  const refreshTokenUseCase = RefreshTokenUseCase.create(tokenRepository,tokenProvider, encrypter ,dateProvider)
+  const refreshTokebRoute = RefreshTokenRoute.create(refreshTokenUseCase)
 
   return [refreshTokebRoute]
 }

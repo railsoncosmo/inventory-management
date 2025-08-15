@@ -4,6 +4,8 @@ export interface GetProfileInputDto {
   user_id: string
 }
 
-export interface GetProfileOutputDto {
-  user: User
-}
+// export interface GetProfileOutputDto {
+//   user: User
+// }
+
+export type GetProfileOutputDto = Omit<User, 'password' | 'asPublic'>

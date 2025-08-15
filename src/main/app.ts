@@ -20,7 +20,7 @@ export async function server(){
 
   const routes = [
     ...userRoutes({ repositories, encrypter, tokenProvider, dateProvider }),
-    ...tokenRoutes({ repositories, tokenProvider, dateProvider })
+    ...tokenRoutes({ repositories, encrypter ,tokenProvider, dateProvider })
   ]
   const api = ApiExpress.create(routes)
 

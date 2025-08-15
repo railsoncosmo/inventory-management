@@ -6,7 +6,7 @@ export interface CreateTokenDto {
 }
 
 export interface RefreshTokenInputDto {
-  token: string
+  refresh_token: string
 }
 
 export interface RefreshTokenOutputDto {

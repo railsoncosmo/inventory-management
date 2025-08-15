@@ -11,7 +11,6 @@ import { TokenProvider } from '@/domain/ports/out/token'
 import { DateProvider } from '@/domain/ports/out/date'
 import { Hashing } from '@/domain/ports/out/hasher'
 
-import { UserHttpPresenters } from '@/presentation/user-http.presenter'
 import { GetProfileUserRoute } from '@/infrastructure/http/api/routes/user/get-profile.express.route'
 import { GetProfileUsecase } from '@/domain/users/application/usecases/get-profile.usecase'
 
@@ -26,7 +25,6 @@ interface UserComposer {
 }
 
 export function userRoutes({ repositories, encrypter, tokenProvider, dateProvider }: UserComposer) {
-  const userPresenters = new UserHttpPresenters()
 
   const { userRepository, tokenRepository } = repositories
 
@@ -34,20 +32,16 @@ export function userRoutes({ repositories, encrypter, tokenProvider, dateProvide
   const authUserUseCase = AuthUserUseCase.create(
     userRepository,
     encrypter,
-    userPresenters,
     tokenProvider,
     tokenRepository,
     dateProvider,
   )
 
-  const getProfileUseCase = GetProfileUsecase.create(
-    userRepository,
-    userPresenters
-  )
+  const getProfileUseCase = GetProfileUsecase.create(userRepository)
 
   const createUserRoute = CreateUserRoute.create(createUserUseCase)
-  const authUserRoute = AuthUserRoute.create(authUserUseCase, userPresenters)
-  const getProfileUserRoute = GetProfileUserRoute.create(getProfileUseCase, userPresenters)
+  const authUserRoute = AuthUserRoute.create(authUserUseCase)
+  const getProfileUserRoute = GetProfileUserRoute.create(getProfileUseCase)
 
   return [createUserRoute, authUserRoute, getProfileUserRoute]
 }

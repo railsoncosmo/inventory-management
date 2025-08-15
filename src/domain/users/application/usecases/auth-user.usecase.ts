@@ -6,14 +6,12 @@ import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-err
 import { DateProvider } from '@/domain/ports/out/date'
 import { Hashing } from '@/domain/ports/out/hasher'
 import { TokenProvider } from '@/domain/ports/out/token'
-import { UserPresenters } from '@/domain/ports/in/user.present'
 import { env } from '@/config/env'
 
 export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutputDto>{
   private constructor(
     private readonly userGateway: UserGateway,
     private readonly encrypter: Hashing,
-    private readonly userPresenters: UserPresenters,
     private readonly tokenProvider: TokenProvider,
     private readonly tokenGateway: TokenGateway,
     private readonly dateProvider: DateProvider,
@@ -21,8 +19,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
 
   public static create(
     userGateway: UserGateway, 
-    encrypter: Hashing, 
-    userPresenters: UserPresenters, 
+    encrypter: Hashing,
     tokenProvider: TokenProvider, 
     tokenGateway: TokenGateway,
     dateProvider: DateProvider
@@ -30,7 +27,6 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
     return new AuthUserUseCase(
       userGateway, 
       encrypter, 
-      userPresenters, 
       tokenProvider, 
       tokenGateway,
       dateProvider
@@ -44,7 +40,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       throw new InvalidCredentialsError()
     }
 
-    const doesPasswordMatches = await this.encrypter.comparePassword(password, user.password)
+    const doesPasswordMatches = await this.encrypter.compare(password, user.password)
     if(!doesPasswordMatches){
       throw new InvalidCredentialsError()
     }
@@ -57,15 +53,20 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
       sub: user.id.toString(),
     })
 
+    const refreshTokenHashed = await this.encrypter.hash(refresh_token)
+
     const expiresRefreshToken = this.dateProvider.addDays(env.EXPIRES_REFRESH_TOKEN_DAYS)
     await this.tokenGateway.deleteAllByUserId(user.id.toString())
 
     await this.tokenGateway.create({
       user_id: user.id.toString(),
-      refresh_token,
+      refresh_token: refreshTokenHashed,
       expires_date: expiresRefreshToken
     })
-
-    return await this.userPresenters.presentAuthUser(accessToken, refresh_token)
+    
+    return {
+      token: accessToken,
+      refresh_token
+    }
   }
 }

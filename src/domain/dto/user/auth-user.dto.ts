@@ -5,5 +5,5 @@ export type AuthUserInputDto = {
 
 export type AuthUserOutputDto = {
   token: string
-  refresh_token: string
+  refresh_token?: string
 }

@@ -4,7 +4,6 @@ import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes
 import { authUserBodySchema } from '@/shared/validators/auth-user-body-schema'
 import { AuthUserInputDto } from '@/domain/dto/user/auth-user.dto'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
-import { UserHttpPresenters } from '@/presentation/user-http.presenter'
 
 export type CreateUserResponseDto = {
   id: string
@@ -14,17 +13,14 @@ export class AuthUserRoute implements Routes {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
-    private readonly authUserUseCase: AuthUserUseCase,
-    private readonly createUserHttpPresenters: UserHttpPresenters,
-    
+    private readonly authUserUseCase: AuthUserUseCase,    
   ){}
 
-  public static create(authUserUseCase: AuthUserUseCase, createUserHttpPresenters: UserHttpPresenters){
+  public static create(authUserUseCase: AuthUserUseCase){
     return new AuthUserRoute(
       '/session',
       httpMethod.POST,
       authUserUseCase,
-      createUserHttpPresenters
     )
   }
 
@@ -39,7 +35,7 @@ export class AuthUserRoute implements Routes {
         }
 
         const { token, refresh_token } = await this.authUserUseCase.execute(input)
-        const user_tokens = await this.createUserHttpPresenters.presentAuthUser(token, refresh_token)
+        
         res
           .cookie('refresh_token', refresh_token, {
             path: '/',
@@ -47,7 +43,7 @@ export class AuthUserRoute implements Routes {
             sameSite: true,
             httpOnly: true })
           .status(200)
-          .json(user_tokens)
+          .json({token})
 
       } catch (error) {
         if (error instanceof InvalidCredentialsError) {

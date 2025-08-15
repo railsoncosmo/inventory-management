@@ -3,6 +3,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from './value-objects/unique-entity-id'
 import { Role } from './value-objects/role'
 import { Optional } from '@/core/types/optional'
+import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 interface UserProps {
   name: string
@@ -28,6 +29,17 @@ export class User extends Entity<UserProps> {
     return user
   }
 
+  public asPublic(): GetProfileOutputDto{
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      phone: this.phone,
+      image_url: this.image_url,
+      role: this.role,
+      created_at: this.created_at,
+    }
+  }
   get name(){
     return this.props.name
   }

@@ -25,7 +25,7 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
     role
   }: CreateUserInputDto): Promise<CreateUserOutputDto>{
 
-    const passwordHashed = await this.encrypter.hashPassword(password)
+    const passwordHashed = await this.encrypter.hash(password)
 
     const userAlreadyExists = await this.userGateway.countByEmail(email)
     if(userAlreadyExists){

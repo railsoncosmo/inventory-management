@@ -15,23 +15,12 @@ export class InMemoryUsersRepository implements UserGateway {
   }
 
   async countByEmail(email: string): Promise<number> {
-    return this.user.filter(doc => doc.id === email).length
+    return this.user.filter(doc => doc.id.toString() === email).length
   }
 
   async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {
-    const user = this.user.find(doc => doc.id === user_id)
+    const user = this.user.find(doc => doc.id.toString() === user_id)
     if(!user) return null
-
-    const profile: GetProfileOutputDto = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      image_url: user.image_url,
-      role: user.role,
-      created_at: user.created_at,
-    }
-
-    return profile
+    return user.asPublic()
   }
 }

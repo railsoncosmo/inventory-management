@@ -19,7 +19,7 @@ describe('Create User', () => {
       email: 'railson@teste.com',
       password: '123123',
       phone: '85992169883',
-      role: 'ADMIN'
+      role: 'admin'
     })
 
     expect(user.id).toBeDefined()
@@ -33,7 +33,7 @@ describe('Create User', () => {
       email: 'railson@teste.com',
       password: '123123',
       phone: '85992169883',
-      role: 'ADMIN'
+      role: 'admin'
     })
 
     try {
@@ -42,7 +42,7 @@ describe('Create User', () => {
         email: 'railson@teste.com',
         password: 'abc123',
         phone: '85999999999',
-        role: 'USER'
+        role: 'user'
       })
     } catch (error) {
       expect(error).toBeInstanceOf(UserAlreadyExistsError)

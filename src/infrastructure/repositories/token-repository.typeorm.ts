@@ -23,11 +23,10 @@ export class TokenTypeormRepository implements TokenGateway {
     return TypeormTokenMapper.toDomain(newToken)
   }
 
-  async findByUserIdAndRefreshToken(user_id: string, refresh_token: string): Promise<Token | null> {
+  async findByUserIdAndRefreshToken(user_id: string): Promise<Token | null> {
     const userToken = await this.tokenRepository.findOne({
       where: {
         user_id: user_id,
-        refresh_token,
       }
     })
     if (!userToken) return null
