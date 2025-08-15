@@ -4,26 +4,46 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node ./src/index.ts",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/config/data-source.ts migration:generate ./src/migrations/default",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/config/data-source.ts migration:run"
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
+    "test:watch": "vitest --watch",
+    "test": "vitest run",
+    "typeorm": "node -r ts-node/register -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli.js",
+    "migration:generate": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:generate ./src/infrastructure/database/typeorm/migrations/migration",
+    "migration:run": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:run"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.9",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.7",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
-    "dotenv": "^17.0.0",
+    "@casl/ability": "^6.7.3",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dayjs": "^1.11.13",
+    "dotenv": "^17.2.0",
     "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.25"
+    "typeorm": "^0.3.25",
+    "zod": "^4.0.5"
   }
 }
