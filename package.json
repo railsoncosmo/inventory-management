@@ -7,7 +7,6 @@
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
     "test:watch": "vitest --watch",
     "test": "vitest run",
-    "start": "bun run ./src/server.ts",
     "typeorm": "node -r ts-node/register -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli.js",
     "migration:generate": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:generate ./src/infrastructure/database/typeorm/migrations/migration",
     "migration:run": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:run"

@@ -53,6 +53,6 @@ export class UserTypeormRepository implements UserGateway {
       select: ['id' ,'name', 'email', 'phone', 'image_url', 'role', 'created_at']
     })
     if (!user) return null
-    return TypeormUserMapper.toDomain(user)
+    return TypeormUserMapper.toUserPublic(user)
   }
 }
