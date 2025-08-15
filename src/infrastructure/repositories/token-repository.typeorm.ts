@@ -39,6 +39,6 @@ export class TokenTypeormRepository implements TokenGateway {
   }
 
   async deleteAllByUserId(user_id: string): Promise<void> {
-    await this.tokenRepository.delete(user_id)
+    await this.tokenRepository.delete({user_id})
   }
 }
