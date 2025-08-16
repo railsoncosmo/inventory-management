@@ -128,49 +128,6 @@ flowchart LR
     C -->|JWT Expirado| F[API /refresh-token]
     F -->|Novo JWT| C
 ```
-
----
-
-## 🏗 Arquitetura (Clean Architecture + DDD)
-
-```mermaid
-flowchart TB
-    subgraph Domain
-        Entities[Entidades]
-        ValueObjects[Value Objects]
-        DomainServices[Serviços de Domínio]
-    end
-
-    subgraph Core
-        UseCases[Casos de Uso]
-        Ports[Portas (Interfaces)]
-    end
-
-    subgraph Infrastructure
-        DB[Repositórios / TypeORM]
-        ExternalServices[Serviços Externos]
-    end
-
-    subgraph Main
-        Controllers[Controllers]
-        Routes[Rotas]
-        Middlewares[Middlewares]
-    end
-
-    subgraph Shared
-        Utils[Utilitários Comuns]
-    end
-
-    Controllers --> UseCases
-    Routes --> Controllers
-    Middlewares --> Controllers
-    UseCases --> Entities
-    UseCases --> Ports
-    Ports --> DB
-    Ports --> ExternalServices
-    Utils --> UseCases
-```
-
 ---
 
 ## 📌 Rotas Principais
