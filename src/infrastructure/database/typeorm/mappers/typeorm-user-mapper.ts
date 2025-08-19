@@ -21,7 +21,7 @@ export class TypeormUserMapper {
 
   static toUserPublic(raw: UserOrm): GetProfileOutputDto {
     return {
-      id: new UniqueEntityId(raw.id),
+      id: new UniqueEntityId(raw.id).toValue(),
       name: raw.name,
       email: raw.email,
       phone: raw.phone,

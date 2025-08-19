@@ -1,6 +1,6 @@
-import { UserGateway } from '../../src/domain/users/application/gateways/user.gateway'
-import { User } from '../../src/domain/users/enterprise/entities/user.entity'
-import { GetProfileOutputDto } from '../../src/domain/dto/user/get-profile.dto'
+import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
+import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 export class InMemoryUsersRepository implements UserGateway {
   public user: User[] = []
@@ -15,7 +15,7 @@ export class InMemoryUsersRepository implements UserGateway {
   }
 
   async countByEmail(email: string): Promise<number> {
-    return this.user.filter(doc => doc.id.toString() === email).length
+    return this.user.filter(doc => doc.email === email).length
   }
 
   async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {

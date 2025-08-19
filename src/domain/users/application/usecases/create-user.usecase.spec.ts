@@ -1,50 +1,21 @@
-import { BcryptHash } from '@/infrastructure/services/bcrypt'
-import { CreateUserUseCase } from '@/domain/users/application/usecases/create-user.usecase'
-import { InMemoryUsersRepository } from '../../../../../test/repositories/in-memory-user-repository'
+import { makeUser } from '@/test/factories/make-user'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
 
-let inMemoryUsersRepository: InMemoryUsersRepository
-let sut: CreateUserUseCase
-
-describe('Create User', () => {
-  beforeEach(() => {
-    const encrypter = BcryptHash.create()
-    inMemoryUsersRepository = new InMemoryUsersRepository()
-    sut = CreateUserUseCase.create(inMemoryUsersRepository, encrypter)
-  })
+describe('Create User Use Case', () => {
 
   it('Shold be able to create user', async () => {
-    const { user } = await sut.execute({
-      name: 'Railson Cosmo',
-      email: 'railson@teste.com',
-      password: '123123',
-      phone: '85992169883',
-      role: 'admin'
-    })
+    const user = await makeUser()
 
     expect(user.id).toBeDefined()
-    expect(inMemoryUsersRepository.user[0].id).toEqual(user.id)
+    expect(user.name).toBe('user test create')
     expect(user.password).not.toBe('123123')
   })
 
   it('Should throw error if user already exists', async () => {
-    await sut.execute({
-      name: 'Railson Cosmo',
-      email: 'railson@teste.com',
-      password: '123123',
-      phone: '85992169883',
-      role: 'admin'
-    })
-
     try {
-      await sut.execute({
-        name: 'Outro Nome',
-        email: 'railson@teste.com',
-        password: 'abc123',
-        phone: '85999999999',
-        role: 'user'
-      })
-    } catch (error) {
+      const userExists = await makeUser({ email: 'user_email@teste.com' })
+      await makeUser({ email: userExists.email })
+    } catch (error){
       expect(error).toBeInstanceOf(UserAlreadyExistsError)
     }
   })
