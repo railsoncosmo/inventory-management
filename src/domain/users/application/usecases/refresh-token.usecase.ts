@@ -53,11 +53,11 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, AuthUs
     await this.tokenGateway.deleteByTokenId(userToken.id.toString())
 
     const accessToken = await this.tokenProvider.generateAccessToken({
-      sub: userToken.id.toString(),
+      sub: user_id,
     })
     
     const refreshToken = await this.tokenProvider.generateRefreshToken({
-      sub: userToken.id.toString(),
+      sub: user_id,
     })
 
     const refreshTokenHashed = await this.encrypter.hash(refreshToken)
@@ -65,7 +65,7 @@ export class RefreshTokenUseCase implements UseCase<RefreshTokenInputDto, AuthUs
     const expiresRefreshToken = this.dateProvider.addDays(env.EXPIRES_REFRESH_TOKEN_DAYS)
     
     await this.tokenGateway.create({
-      user_id: sub,
+      user_id: user_id,
       refresh_token: refreshTokenHashed,
       expires_date: expiresRefreshToken,
     })
