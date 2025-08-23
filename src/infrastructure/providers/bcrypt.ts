@@ -2,11 +2,7 @@ import bcrypt from 'bcryptjs'
 import { Hashing } from '@/domain/ports/out/hasher'
 
 export class BcryptHash implements Hashing {
-  private constructor(private readonly salt: number = 6){}
-
-  public static create(salt?: number) {
-    return new BcryptHash(salt)
-  }
+  constructor(private readonly salt: number = 6){}
 
   async hash(password: string): Promise<string> {
     return await bcrypt.hash(password, this.salt)
