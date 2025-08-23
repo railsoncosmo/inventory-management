@@ -1,4 +1,4 @@
-import { makeUser } from '@/test/factories/make-user'
+import { makeUser } from '@/__test__/factories/make-user'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
 
 describe('Create User Use Case', () => {

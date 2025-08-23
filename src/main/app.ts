@@ -3,9 +3,9 @@ import { ApiExpress } from '@/infrastructure/http/api/express/api.express'
 
 import { createRepositories } from '@/infrastructure/database/repository-container'
 
-import { BcryptHash } from '@/infrastructure/services/bcrypt'
-import { JwtToken } from '@/infrastructure/services/jwt'
-import { DayJs } from '@/infrastructure/services/dayjs'
+import { BcryptHash } from '@/infrastructure/providers/bcrypt'
+import { JwtToken } from '@/infrastructure/providers/jwt'
+import { DayJs } from '@/infrastructure/providers/dayjs'
 
 import { userRoutes } from './container/user'
 import { tokenRoutes } from './container/refresh-token'
@@ -14,7 +14,7 @@ export async function server(){
   const dataSource = await AppDataSource.initialize()
 
   const repositories = createRepositories(dataSource)
-  const encrypter = BcryptHash.create()
+  const encrypter = new BcryptHash()
   const tokenProvider = new JwtToken()
   const dateProvider = new DayJs()
 

@@ -1,7 +1,7 @@
-import { Email } from './value-objects/email'
+import { Email } from './value-objects/email.vo'
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from './value-objects/unique-entity-id'
-import { Role } from './value-objects/role'
+import { Role } from './value-objects/role.vo'
 import { Optional } from '@/core/types/optional'
 import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 

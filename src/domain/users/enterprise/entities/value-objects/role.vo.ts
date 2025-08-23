@@ -1,4 +1,5 @@
 import { UserRole } from '@/domain/enums/roles'
+import { InvalidRoleError } from '@/domain/errors/invalid-role-error'
 
 export class Role {
   private readonly _value: string
@@ -11,7 +12,7 @@ export class Role {
   private static isValidRole(value: string){
     const roles = Object.values(UserRole) as string[]
     if (!roles.includes(value)){
-      throw new Error('Cargo de usuário inválido.')
+      throw new InvalidRoleError()
     }
   }
 
