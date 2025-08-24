@@ -7,14 +7,14 @@ import { User } from '@/domain/users/enterprise/entities/user.entity'
 import { InvalidEmailError } from '@/domain/errors/invalid-email-error'
 
 let inMemoryUsersRepository: InMemoryUsersRepository
-let encrypter: FakeHasher
+let mockHashing: FakeHasher
 let sut: CreateUserUseCase
 
 describe('Create User Use Case', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
-    encrypter = new FakeHasher()
-    sut = CreateUserUseCase.create(inMemoryUsersRepository, encrypter)
+    mockHashing = new FakeHasher()
+    sut = CreateUserUseCase.create(inMemoryUsersRepository, mockHashing)
   })
 
   it('Shold be able to create user', async () => {

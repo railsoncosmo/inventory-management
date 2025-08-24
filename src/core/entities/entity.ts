@@ -1,4 +1,4 @@
-import { UniqueEntityId } from '@/domain/users/enterprise/entities/value-objects/unique-entity-id'
+import { UniqueEntityId } from '@/domain/users/enterprise/value-objects/unique-entity-id'
 
 export class Entity<T> {
   private readonly _id: UniqueEntityId
