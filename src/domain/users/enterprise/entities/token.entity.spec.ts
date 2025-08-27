@@ -11,5 +11,8 @@ describe('Token Entity', () => {
     })
 
     expect(token.id).toBeDefined()
+    expect(token.expires_date).toBeDefined()
+    expect(token.refresh_token).toBeDefined()
+    expect(token.user_id).toBeDefined()
   })
 })
