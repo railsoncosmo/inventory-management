@@ -1,5 +1,5 @@
 import { InMemoryUsersRepository } from '@/__test__/repositories/in-memory-user-repository'
-import { mockUser } from '@/__test__/mocks/user.request.mock'
+import { mockUser } from '@/__test__/mocks/create-user.request.mock'
 import { FakeHasher } from '@/__test__/fakes/fake-hash'
 import { CreateUserUseCase } from './create-user.usecase'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'

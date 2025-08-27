@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import { InMemoryUsersRepository } from '@/__test__/repositories/in-memory-user-repository'
 import { FakeHasher } from '@/__test__/fakes/fake-hash'
 import { AuthUserUseCase } from './auth-user.usecase'
@@ -5,13 +6,11 @@ import { FakeTokenGenerator } from '@/__test__/fakes/fake-token'
 import { FakeDateProvider } from '@/__test__/fakes/fake-dayjs'
 import { InMemoryTokenRepository } from '@/__test__/repositories/in-memory-token-repository'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
-import { User } from '../../enterprise/entities/user.entity'
-import dotenv from 'dotenv'
-import { Email } from '../../enterprise/value-objects/email.vo'
-import { Role } from '../../enterprise/value-objects/role.vo'
+import { makeUser } from '@/__test__/mocks/user.mock'
 
 dotenv.config({
   path: '.env.test',
+  override: true,
 })
 
 let inMemoryUsersRepository: InMemoryUsersRepository
@@ -20,30 +19,6 @@ let mockHashing: FakeHasher
 let mockTokenGenerator: FakeTokenGenerator
 let mockDateProvider: FakeDateProvider
 let sut: AuthUserUseCase
-
-async function makeTestUser(
-  hasher: FakeHasher,
-  override: Partial<{
-    name: string
-    email: string
-    password: string
-    phone: string
-    role: string
-  }> = {}
-) {
-  const hashedPassword = await hasher.hash(override.password || '123123')
-  
-  const userData = {
-    name: override.name || 'John Doe',
-    email: new Email(override.email || 'user_test@hotmail.com'),
-    password: hashedPassword,
-    image_url: '',
-    phone: override.phone || '85999999999',
-    role: new Role(override.role || 'admin'),
-  }
-  
-  return User.create(userData)
-}
 
 describe('Authentication User Use Case', () => {
   beforeEach(() => {
@@ -61,7 +36,7 @@ describe('Authentication User Use Case', () => {
   })
 
   it('Shold be able to authentication user', async () => {
-    const user = await makeTestUser(mockHashing)
+    const user = await makeUser(mockHashing)
     await inMemoryUsersRepository.save(user)
 
     const result = await sut.execute({
@@ -76,7 +51,7 @@ describe('Authentication User Use Case', () => {
   })
 
   it('should throw InvalidCredentialsError when user does not exist', async () => {
-    const user = await makeTestUser(mockHashing)
+    const user = await makeUser(mockHashing)
     await inMemoryUsersRepository.save(user)
 
     const InvalidCredentials = {
@@ -88,7 +63,7 @@ describe('Authentication User Use Case', () => {
       .rejects.toThrowError(InvalidCredentialsError)
   })
   it('should throw InvalidCredentialsError when password is incorrect', async () => {
-    const user = await makeTestUser(mockHashing)
+    const user = await makeUser(mockHashing)
     await inMemoryUsersRepository.save(user)
 
     const InvalidCredentials = {
@@ -101,7 +76,7 @@ describe('Authentication User Use Case', () => {
   })
 
   it('should save refresh token in repository with hash value', async () => {
-    const user = await makeTestUser(mockHashing)
+    const user = await makeUser(mockHashing)
     await inMemoryUsersRepository.save(user)
 
     const { refresh_token } = await sut.execute({

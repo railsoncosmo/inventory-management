@@ -1,4 +1,4 @@
-import { mockUser } from '@/__test__/mocks/user.request.mock'
+import { mockUser } from '@/__test__/mocks/create-user.request.mock'
 import { User } from './user.entity'
 import { Email } from '../value-objects/email.vo'
 import { Role } from '../value-objects/role.vo'
