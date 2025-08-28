@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gerenciamento de Estoque",
+    "version": "1.0.0",
+    "description": "API RESTful para o gerenciamento de estoque. Permite o cadastro, consulta, atualização e remoção de produtos, usuários e registro de entradas e saídas para controle eficiente do estoque. Ideal para pequenas e médias empresas que precisam gerenciar inventário de forma informatizada.",
+    "contact": {
+      "email": "railson.devv@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3334/",
+      "description": "API Dev"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Cadastro de usuário",
+        "description": "Cadastra um novo usuário no sistema.",
+        "tags": ["Users"],
+        "requestBody": {
+          "description": "Objeto com informações necessárias para criação de um novo usuário.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" },
+              "example": {
+                "name": "Jhon Doe",
+                "email": "Jhon.doe@example.com",
+                "password": "Strongpassword123",
+                "phone": "99 999999999",
+                "image_url": "https://www.image.example.com/pictures",
+                "role": "admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+            },
+          "400": {
+          "description": "Erro na validação dos dados enviados."
+            }
+          }
+        }
+      }
+    },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "image_url": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

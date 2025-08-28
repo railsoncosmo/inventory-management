@@ -24,13 +24,14 @@ export class CreateUserRoute implements Routes {
     return async (req: Request, res: Response) => {
 
       try {
-        const { name, email, password, phone, role } = createUserBodySchema.parse(req.body)
+        const { name, email, password, phone, image_url, role } = createUserBodySchema.parse(req.body)
 
         const input: CreateUserInputDto = {
           name,
           email,
           password,
           phone,
+          image_url,
           role
         }
 

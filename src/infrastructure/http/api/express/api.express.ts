@@ -1,5 +1,7 @@
 import express, { Express } from 'express'
 import cookieParser from 'cookie-parser'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDoc from '../../../../../swagger.json'
 import { Api } from '@/infrastructure/http/api/api'
 import { Routes } from '@/infrastructure/http/api/routes/routes'
 import { globalError } from '@/infrastructure/http/middleware/global-error'
@@ -13,6 +15,7 @@ export class ApiExpress implements Api {
     this.app.use(cookieParser())
     this.addRoutes(routes)
     this.app.use(globalError)
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
   }
 
   public static create(routes: Routes[]){
