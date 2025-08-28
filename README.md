@@ -5,6 +5,14 @@ Desenvolvida seguindo os princípios do **SOLID**, utilizando **Clean Architectu
 
 ---
 
+## 📚 Documentação da API (Swagger)
+
+Documentação interativa disponível via **Swagger UI**!  
+Após clonar o repositório e subir o projeto localmente (via Docker Compose ou npm)
+Acesse: http://localhost:PORT/api-docs
+
+---
+
 ## 🚀 Tecnologias Utilizadas
 
 - **Node.js** – Ambiente de execução JavaScript no servidor
@@ -18,17 +26,17 @@ Desenvolvida seguindo os princípios do **SOLID**, utilizando **Clean Architectu
 
 ---
 
-## 📋 Funcionalidades
+## ✅ Checklist de Funcionalidades
 
-- 👤 **Cadastro de usuário**
-- 🔒 **Controle de acesso baseado em cargo** (RBAC)
-- 🔑 **Autenticação com JWT** e **persistência com refresh token**
-- 🏷 **Cadastro de categorias**
-- 📦 **Cadastro de produtos**
-- ➕ **Adicionar produtos ao estoque**
-- ➖ **Remover produtos do estoque**
-- 💰 **Lançamento de vendas**
-- 📊 **Geração de relatórios de vendas**
+- [x] Cadastro de usuário
+- [x] Controle de acesso baseado em cargo (RBAC)
+- [x] Autenticação com JWT e persistência com refresh token
+- [ ] Cadastro de categorias
+- [ ] Cadastro de produtos
+- [ ] Adicionar produtos ao estoque
+- [ ] Remover produtos do estoque
+- [ ] Lançamento de vendas
+- [ ] Geração de relatórios de vendas
 
 ---
 
@@ -36,6 +44,7 @@ Desenvolvida seguindo os princípios do **SOLID**, utilizando **Clean Architectu
 
 ```
 src/
+├── test/               # Testes unitários, integração e e2e
 ├── core/               # Casos de uso, contratos e lógica de aplicação
 ├── domain/             # Entidades e regras de negócio
 ├── infrastructure/     # Banco de dados, TypeORM, rotas, middlewares e serviços externos
@@ -151,6 +160,9 @@ flowchart LR
 
 Este projeto utiliza **Vitest** para testes unitários.
 
+⚠️ **Atenção:**  
+Para rodar os testes unitários é necessário criar um arquivo de variáveis de ambiente chamado `.env.test` na raiz do projeto, contendo as configurações de ambiente específicas para o ambiente de teste (como banco de dados, JWT_SECRET, REFRESH_TOKEN_SECRET, etc).
+
 Para rodar os testes:
 ```bash
 npm run test
@@ -163,7 +175,7 @@ npm run test:watch
 
 Para gerar o coverage:
 ```bash
-npm run test:coverage
+npm run coverage
 ```
 
 ---
