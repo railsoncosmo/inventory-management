@@ -1,6 +1,6 @@
 import { Token } from '@/domain/users/enterprise/entities/token.entity'
 import { Token as TokenOrm } from '../entities/Token'
-import { UniqueEntityId } from '@/domain/users/enterprise/entities/value-objects/unique-entity-id'
+import { UniqueEntityId } from '@/domain/users/enterprise/value-objects/unique-entity-id'
 
 export class TypeormTokenMapper {
   static toDomain(raw: TokenOrm): Token {

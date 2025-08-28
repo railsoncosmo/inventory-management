@@ -7,9 +7,10 @@
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server.ts",
     "test:watch": "vitest --watch",
     "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "typeorm": "node -r ts-node/register -r tsconfig-paths/register -r dotenv/config ./node_modules/typeorm/cli.js",
-    "migration:generate": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:generate ./src/infrastructure/database/typeorm/migrations/migration",
-    "migration:run": "npm run typeorm -- -d ./src/package/typeorm/data-source.ts migration:run"
+    "migration:generate": "npm run typeorm -- -d ./src/config/data-source.ts migration:generate ./src/infrastructure/database/typeorm/migrations/migration",
+    "migration:run": "npm run typeorm -- -d ./src/config/data-source.ts migration:run"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +18,13 @@
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
+    "@faker-js/faker": "^9.9.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/cookie-parser": "^1.4.9",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.7",
+    "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.31.0",
     "globals": "^16.3.0",
     "nodemon": "^3.1.10",

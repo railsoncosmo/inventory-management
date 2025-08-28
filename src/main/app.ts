@@ -1,4 +1,4 @@
-import { AppDataSource } from '@/package/typeorm/data-source'
+import { AppDataSource } from '@/config/data-source'
 import { ApiExpress } from '@/infrastructure/http/api/express/api.express'
 
 import { createRepositories } from '@/infrastructure/database/repository-container'
