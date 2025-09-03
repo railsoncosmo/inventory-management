@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3334/",
+      "url": "http://localhost:3333/",
       "description": "API Dev"
     }
   ],
@@ -28,9 +28,9 @@
               "schema": { "$ref": "#/components/schemas/User" },
               "example": {
                 "name": "Jhon Doe",
-                "email": "Jhon.doe@example.com",
-                "password": "Strongpassword123",
-                "phone": "99 999999999",
+                "email": "jhon.doe@example.com",
+                "password": "password123",
+                "phone": "99999999999",
                 "image_url": "https://www.image.example.com/pictures",
                 "role": "admin"
               }

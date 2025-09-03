@@ -1,4 +1,5 @@
 import express, { Express } from 'express'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import swaggerUi from 'swagger-ui-express'
 import swaggerDoc from '../../../../../swagger.json'
@@ -12,6 +13,7 @@ export class ApiExpress implements Api {
   private constructor(private routes: Routes[]){
     this.app = express()
     this.app.use(express.json())
+    this.app.use(cors())
     this.app.use(cookieParser())
     this.addRoutes(routes)
     this.app.use(globalError)
