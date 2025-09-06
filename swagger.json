@@ -19,13 +19,17 @@
       "post": {
         "summary": "Cadastro de usuário",
         "description": "Cadastra um novo usuário no sistema.",
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "requestBody": {
           "description": "Objeto com informações necessárias para criação de um novo usuário.",
           "required": true,
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/User" },
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
               "example": {
                 "name": "Jhon Doe",
                 "email": "jhon.doe@example.com",
@@ -40,14 +44,159 @@
         "responses": {
           "201": {
             "description": "Usuário criado com sucesso"
-            },
+          },
           "400": {
-          "description": "Erro na validação dos dados enviados."
-            }
+            "description": "Erro na validação dos dados enviados."
           }
         }
       }
     },
+    "/session": {
+      "post": {
+        "summary": "Login de usuário",
+        "description": "Permite que o usuário realize o login no sistema.",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "description": "Objeto com informações necessárias para o login do usuário.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              },
+              "example": {
+                "email": "jhon.doe@example.com",
+                "password": "password123"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Token JWT para autenticação nas próximas requisições."
+                    }
+                  }
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro na validação dos dados enviados."
+          },
+          "401": {
+            "description": "Credenciais de acesso inválidas."
+          }
+        }
+      }
+    },
+    "/refresh/token": {
+      "post": {
+        "summary": "Atualiza o token de acesso",
+        "description": "Gera um novo `access_token` para o usuário. O `refresh_token` é lido do cookie da requisição e um novo `refresh_token` é enviado no cookie da resposta, estendendo a validade da sessão.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "refresh_token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "O token de atualização (refresh_token) enviado via cookie."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token de acesso atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Novo token JWT de acesso (access_token) a ser usado para autenticação."
+                    }
+                  }
+                },
+                "example": {
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                }
+              }
+            },
+            "headers": {
+              "Set-Cookie": {
+                "description": "Define um novo refresh_token seguro no cookie do navegador.",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "refresh_token=novo-token-jwt-aqui; Path=/; HttpOnly; Secure; SameSite=Strict"
+              }
+            }
+          },
+          "400": {
+            "description": "Token não encontrado ou inválido."
+          },
+          "401": {
+            "description": "Token de atualização inválido ou expirado."
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "summary": "Exibe o perfil do usuário logado",
+        "description": "Retorna os dados do usuário com base no ID extraído do token JWT presente no cabeçalho de autorização.",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "example": {
+                  "id": "123e4567-e89b-12d3-a456-426614174000",
+                  "name": "Jhon Doe",
+                  "email": "jhon.doe@example.com",
+                  "phone": "99999999999",
+                  "image_url": "https://www.image.example.com/pictures",
+                  "created_at": "2025-09-05T15:00:00Z",
+                  "updated_at": "2025-09-05T15:00:00Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Tipo de token inválido para acessar esta rota."
+          }
+        }
+      }
+    }
+  },
   "components": {
     "schemas": {
       "User": {
@@ -80,6 +229,32 @@
             "format": "date-time"
           }
         }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "TokenRequest": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SecuritySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
