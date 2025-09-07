@@ -1,6 +1,6 @@
 import { AbilityBuilder } from '@casl/ability'
 import { AppAbility } from '.'
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { User } from './models/user'
 import { Role } from '@/infrastructure/rbac/roles'
 
 
