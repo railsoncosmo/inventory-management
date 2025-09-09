@@ -20,7 +20,7 @@ describe('Create User Use Case', () => {
   it('Shold be able to create user', async () => {
     const newUser = mockUser()
     const { user } = await sut.execute(newUser)
-    await inMemoryUsersRepository.save(user)
+    await inMemoryUsersRepository.create(user)
 
     expect(user.id).toBeDefined()
     expect(user.name).toBe(newUser.name)
@@ -57,7 +57,7 @@ describe('Create User Use Case', () => {
     const newUser = mockUser()
     await sut.execute(newUser)
 
-    const user = await inMemoryUsersRepository.find(newUser.email)
+    const user = await inMemoryUsersRepository.findByEmail(newUser.email)
 
     expect(user).toBeDefined()
     expect(user?.email).toBe(user?.email)

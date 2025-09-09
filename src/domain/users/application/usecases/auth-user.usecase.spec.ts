@@ -37,7 +37,7 @@ describe('Authentication User Use Case', () => {
 
   it('Shold be able to authentication user', async () => {
     const user = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(user)
+    await inMemoryUsersRepository.create(user)
 
     const result = await sut.execute({
       email: 'user_test@hotmail.com',
@@ -52,7 +52,7 @@ describe('Authentication User Use Case', () => {
 
   it('should throw InvalidCredentialsError when user does not exist', async () => {
     const user = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(user)
+    await inMemoryUsersRepository.create(user)
 
     const InvalidCredentials = {
       email: 'user_not_exists@hotmail.com',
@@ -64,7 +64,7 @@ describe('Authentication User Use Case', () => {
   })
   it('should throw InvalidCredentialsError when password is incorrect', async () => {
     const user = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(user)
+    await inMemoryUsersRepository.create(user)
 
     const InvalidCredentials = {
       email: 'user_test@hotmail.com',
@@ -77,7 +77,7 @@ describe('Authentication User Use Case', () => {
 
   it('should save refresh token in repository with hash value', async () => {
     const user = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(user)
+    await inMemoryUsersRepository.create(user)
 
     const { refresh_token } = await sut.execute({
       email: 'user_test@hotmail.com',

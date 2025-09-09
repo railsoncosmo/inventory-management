@@ -17,7 +17,7 @@ describe('Create User Use Case', () => {
 
   it('Shold be able to create user', async () => {
     const userData = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(userData)
+    await inMemoryUsersRepository.create(userData)
 
     const user = await sut.execute({ user_id: userData.id })
 
@@ -28,7 +28,7 @@ describe('Create User Use Case', () => {
 
   it('should call repository with the provided user_id exactly once', async () => {
     const userData = await makeUser(mockHashing)
-    await inMemoryUsersRepository.save(userData)
+    await inMemoryUsersRepository.create(userData)
 
     const spy = vi.spyOn(inMemoryUsersRepository, 'getCurrentUser')
 

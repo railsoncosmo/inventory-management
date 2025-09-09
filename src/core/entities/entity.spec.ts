@@ -1,4 +1,4 @@
-import { Entity } from './entity'
+import { Entity } from './core.entity'
 import { User } from '@/domain/users/enterprise/entities/user.entity'
 import { Email } from '@/domain/users/enterprise/value-objects/email.vo'
 import { Role } from '@/domain/users/enterprise/value-objects/role.vo'

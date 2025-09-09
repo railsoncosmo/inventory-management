@@ -1,5 +1,5 @@
 import { Email } from '../value-objects/email.vo'
-import { Entity } from '@/core/entities/entity'
+import { Entity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '../value-objects/unique-entity-id'
 import { Role } from '../value-objects/role.vo'
 import { Optional } from '@/core/types/optional'

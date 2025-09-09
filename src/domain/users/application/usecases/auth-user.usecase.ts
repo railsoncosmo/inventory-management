@@ -35,7 +35,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
 
   async execute({ email, password }: AuthUserInputDto): Promise<AuthUserOutputDto> {
 
-    const user = await this.userGateway.find(email)
+    const user = await this.userGateway.findByEmail(email)
     if(!user){
       throw new InvalidCredentialsError()
     }

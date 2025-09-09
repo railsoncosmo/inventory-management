@@ -27,7 +27,7 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
 
     const passwordHashed = await this.encrypter.hash(password)
 
-    const userAlreadyExists = await this.userGateway.countByEmail(email)
+    const userAlreadyExists = await this.userGateway.countBy(email)
     if(userAlreadyExists){
       throw new UserAlreadyExistsError()
     }
@@ -39,7 +39,7 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
       phone,
       role: new Role(role),
     })
-    await this.userGateway.save(user)
+    await this.userGateway.create(user)
 
     return { user }
   }
