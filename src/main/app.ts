@@ -9,6 +9,7 @@ import { DayJs } from '@/infrastructure/providers/dayjs'
 
 import { userRoutes } from './container/user'
 import { tokenRoutes } from './container/refresh-token'
+import { categoryRoutes } from './container/category'
 
 export async function server(){
   const dataSource = await AppDataSource.initialize()
@@ -20,7 +21,8 @@ export async function server(){
 
   const routes = [
     ...userRoutes({ repositories, encrypter, tokenProvider, dateProvider }),
-    ...tokenRoutes({ repositories, encrypter ,tokenProvider, dateProvider })
+    ...tokenRoutes({ repositories, encrypter ,tokenProvider, dateProvider }),
+    ...categoryRoutes({ repositories })
   ]
   const api = ApiExpress.create(routes)
 

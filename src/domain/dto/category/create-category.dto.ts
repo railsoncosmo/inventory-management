@@ -1,9 +1,12 @@
-import { Category } from '@/domain/sub-domains/enterprise/entities/category.entity'
 
 export type CreateCategoryInputDto = {
   name: string
 }
 
 export type CreateCategoryOutputDto = {
-  user: Category
+  id: string;
+  name: string;
+  displayName: string;
+  created_at: Date;
+  updated_at?: Date;
 }

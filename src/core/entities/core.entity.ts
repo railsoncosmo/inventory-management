@@ -2,14 +2,26 @@ import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/un
 
 export class Entity<T> {
   private readonly _id: UniqueEntityId
+  private readonly _created_at: Date
+  private readonly _updated_at?: Date
   protected props: T
 
   protected constructor(props: T, id?: UniqueEntityId){
     this._id = id ?? new UniqueEntityId()
+    this._created_at = this._created_at ?? new Date()
+    this._updated_at = this._updated_at ?? new Date()
     this.props = props
   }
 
   get id() {
     return this._id.toValue()
+  }
+
+  get created_at() {
+    return this._created_at
+  }
+
+  get updated_at() {
+    return this._updated_at
   }
 }

@@ -3,9 +3,9 @@ import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.ga
 import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
 import { AuthUserInputDto, AuthUserOutputDto } from '@/domain/dto/user/auth-user.dto'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
-import { DateProvider } from '@/domain/ports/out/date'
-import { Hashing } from '@/domain/ports/out/hasher'
-import { TokenProvider } from '@/domain/ports/out/token'
+import { DateProvider } from '@/domain/interfaces/date'
+import { Hashing } from '@/domain/interfaces/hasher'
+import { TokenProvider } from '@/domain/interfaces/token'
 import { env } from '@/config/env'
 
 export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutputDto>{

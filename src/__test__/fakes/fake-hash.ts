@@ -1,4 +1,4 @@
-import { Hashing } from '@/domain/ports/out/hasher'
+import { Hashing } from '@/domain/interfaces/hasher'
 
 export class FakeHasher implements Hashing {
   async hash(password: string): Promise<string> {

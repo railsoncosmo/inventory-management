@@ -1,4 +1,4 @@
-import { DateProvider } from '@/domain/ports/out/date'
+import { DateProvider } from '@/domain/interfaces/date'
 
 export class FakeDateProvider implements DateProvider {
   addDays(days: number): Date {

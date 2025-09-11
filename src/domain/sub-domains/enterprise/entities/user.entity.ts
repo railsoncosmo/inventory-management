@@ -2,7 +2,6 @@ import { Email } from '../value-objects/email.vo'
 import { Entity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '../value-objects/unique-entity-id'
 import { Role } from '../value-objects/role.vo'
-import { Optional } from '@/core/types/optional'
 import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 interface UserProps {
@@ -12,18 +11,15 @@ interface UserProps {
   phone: string
   role: Role
   image_url?: string
-  created_at: Date
-  updated_at?: Date | null
 }
 
 export class User extends Entity<UserProps> {
   
-  public static create(props: Optional<UserProps, 'created_at'>, id?: UniqueEntityId){
+  public static create(props: UserProps, id?: UniqueEntityId){
     const user = new User({
       ...props,
       email: new Email(props.email.value),
       role: new Role(props.role.value),
-      created_at: props.created_at ?? new Date()
     }, id)
 
     return user
@@ -38,8 +34,10 @@ export class User extends Entity<UserProps> {
       image_url: this.image_url,
       role: this.role,
       created_at: this.created_at,
+      updated_at: this.updated_at
     }
   }
+  
   get name(){
     return this.props.name
   }
@@ -64,21 +62,19 @@ export class User extends Entity<UserProps> {
     return this.props.image_url ?? ''
   }
 
-  get created_at(){
-    return this.props.created_at
+  set name(name: string){
+    this.props.name = name
   }
 
-  private updated(){
-    this.props.updated_at = new Date()
+  set password(password: string){
+    this.props.password = password
   }
 
   set phone(phone: string){
     this.props.phone = phone
-    this.updated()
   }
 
   set image_url(image: string){
     this.props.image_url = image
-    this.updated()
   }
 }

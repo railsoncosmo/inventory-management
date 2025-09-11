@@ -1,5 +1,5 @@
 import { AccessTokenPayload, RefreshTokenPayload } from '@/core/types/base-token'
-import { TokenProvider } from '@/domain/ports/out/token'
+import { TokenProvider } from '@/domain/interfaces/token'
 
 export class FakeTokenGenerator implements TokenProvider {
   async generateAccessToken(payload: Omit<AccessTokenPayload, 'iat' | 'exp' | 'type'>): Promise<string> {

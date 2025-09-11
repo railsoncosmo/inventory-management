@@ -1,4 +1,4 @@
-import { UserRole } from '@/domain/enums/roles'
+import { UserRole } from '@/enums/roles'
 import { InvalidRoleError } from '@/domain/errors/invalid-role-error'
 
 export class Role {

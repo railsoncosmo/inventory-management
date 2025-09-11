@@ -1,9 +1,9 @@
-import { TokenProvider } from '@/domain/ports/out/token'
+import { TokenProvider } from '@/domain/interfaces/token'
 import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
-import { DateProvider } from '@/domain/ports/out/date'
+import { DateProvider } from '@/domain/interfaces/date'
 import { RefreshTokenUseCase } from '@/domain/sub-domains/application/usecases/user/refresh-token.usecase'
 import { RefreshTokenRoute } from '@/infrastructure/http/api/routes/user/refresh-token.express.route'
-import { Hashing } from '@/domain/ports/out/hasher'
+import { Hashing } from '@/domain/interfaces/hasher'
 
 interface RefreshComposer {
   repositories: { 

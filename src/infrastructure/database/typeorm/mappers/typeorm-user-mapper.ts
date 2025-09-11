@@ -14,8 +14,6 @@ export class TypeormUserMapper {
       phone: raw.phone,
       role: new Role(raw.role),
       image_url: raw.image_url,
-      created_at: raw.created_at,
-      updated_at: raw.updated_at
     }, new UniqueEntityId(raw.id))
   }
 
@@ -28,6 +26,7 @@ export class TypeormUserMapper {
       role: raw.role,
       image_url: raw.image_url,
       created_at: raw.created_at,
+      updated_at: raw.updated_at
     }
   }
 }

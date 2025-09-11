@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Category } from './Category'
 import { Inventory } from './Inventory'
 import { Transaction } from './Transaction'
@@ -24,6 +24,9 @@ export class Product {
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
     created_at: Date
+
+  @UpdateDateColumn({ type: 'timestamp', default: () => 'NOW()' })
+    updated_at: Date
 
   @ManyToOne(() => User, (user) => user.products)
   @JoinColumn({ name: 'user_id' })

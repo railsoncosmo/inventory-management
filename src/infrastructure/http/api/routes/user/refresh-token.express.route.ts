@@ -23,6 +23,14 @@ export class RefreshTokenRoute implements Routes {
     )
   }
 
+  getPath(): string {
+    return this.path
+  }
+
+  getMethod(): HttpMethod {
+    return this.method
+  }
+
   getHandler() {
     return async (req: Request, res: Response) => {
       const refreshToken: RefreshTokenInputDto = {
@@ -43,12 +51,5 @@ export class RefreshTokenRoute implements Routes {
         .status(200)
         .json({token})
     }
-  }
-  getPath(): string {
-    return this.path
-  }
-
-  getMethod(): HttpMethod {
-    return this.method
   }
 }

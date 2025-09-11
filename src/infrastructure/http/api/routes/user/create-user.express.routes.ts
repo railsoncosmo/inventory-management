@@ -4,6 +4,7 @@ import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes
 import { CreateUserInputDto } from '@/domain/dto/user/create-user.dto'
 import { createUserBodySchema } from '@/shared/validators/create-user-body-schema'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
+import { UserRole } from '@/enums/roles'
 
 export class CreateUserRoute implements Routes {
   private constructor(
@@ -18,6 +19,13 @@ export class CreateUserRoute implements Routes {
       httpMethod.POST,
       createUserUseCase,
     )
+  }
+
+  getPath(): string {
+    return this.path
+  }
+  getMethod(): HttpMethod {
+    return this.method
   }
 
   getHandler() {
@@ -45,12 +53,5 @@ export class CreateUserRoute implements Routes {
         throw error
       }
     }
-  }
-
-  getPath(): string {
-    return this.path
-  }
-  getMethod(): HttpMethod {
-    return this.method
   }
 }

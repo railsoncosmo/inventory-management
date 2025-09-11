@@ -1,12 +1,12 @@
 import { UseCase } from '../usecase'
 import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
-import { TokenProvider } from '@/domain/ports/out/token'
-import { DateProvider } from '@/domain/ports/out/date'
+import { TokenProvider } from '@/domain/interfaces/token'
+import { DateProvider } from '@/domain/interfaces/date'
 import { RefreshTokenInputDto } from '@/domain/dto/user/token-user.dto'
 import { RefreshTokenNotExists } from '@/domain/errors/refesh-token-not-exists-error'
 import { env } from '@/config/env'
 import { AuthUserOutputDto } from '@/domain/dto/user/auth-user.dto'
-import { Hashing } from '@/domain/ports/out/hasher'
+import { Hashing } from '@/domain/interfaces/hasher'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
 
 

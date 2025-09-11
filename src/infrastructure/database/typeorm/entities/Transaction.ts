@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { TypeTransaction } from '@/domain/enums/transaction'
+import { TypeTransaction } from '@/enums/transaction'
 import { Product } from './Product'
 import { User } from './User'
 

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm'
-import { UserRole } from '@/domain/enums/roles'
+import { UserRole } from '@/enums/roles'
 import { Transaction } from './Transaction'
 import { Product } from './Product'
 import { Token } from './Token'

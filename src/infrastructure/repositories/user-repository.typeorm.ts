@@ -1,16 +1,16 @@
 import { Repository } from 'typeorm'
 import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
-import { User as UserORM } from '../database/typeorm/entities/User'
-import { UserRole } from '@/domain/enums/roles'
+import { User as UserOrm } from '../database/typeorm/entities/User'
+import { UserRole } from '@/enums/roles'
 import { TypeormUserMapper } from '../database/typeorm/mappers/typeorm-user-mapper'
 import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 
 export class UserTypeormRepository implements UserGateway {
-  constructor(private readonly userRepository: Repository<UserORM>) {}
+  constructor(private readonly userRepository: Repository<UserOrm>) {}
 
-  public static build(userRepository: Repository<UserORM>) {
+  public static build(userRepository: Repository<UserOrm>) {
     return new UserTypeormRepository(userRepository)
   }
 
@@ -45,7 +45,7 @@ export class UserTypeormRepository implements UserGateway {
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.userRepository.find();
+    const users = await this.userRepository.find()
 
     return users.map(user => TypeormUserMapper.toDomain(user))
   }

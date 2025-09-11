@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { env } from '@/config/env'
-import { TokenProvider } from '@/domain/ports/out/token'
+import { TokenProvider } from '@/domain/interfaces/token'
 import { AccessTokenPayload, RefreshTokenPayload } from '@/core/types/base-token'
 
 export class JwtToken implements TokenProvider {

@@ -24,6 +24,13 @@ export class AuthUserRoute implements Routes {
     )
   }
 
+  getPath(): string {
+    return this.path
+  }
+  getMethod(): HttpMethod {
+    return this.method
+  }
+
   getHandler() {
     return async (req: Request, res: Response) => {
 
@@ -52,12 +59,5 @@ export class AuthUserRoute implements Routes {
         throw error
       }
     }
-  }
-
-  getPath(): string {
-    return this.path
-  }
-  getMethod(): HttpMethod {
-    return this.method
   }
 }
