@@ -6,7 +6,7 @@ import { FakeDateProvider } from '@/__test__/fakes/fake-dayjs'
 import { InMemoryTokenRepository } from '@/__test__/repositories/in-memory-token-repository'
 import { makeToken } from '@/__test__/mocks/token.mock'
 import { makeUser } from '@/__test__/mocks/user.mock'
-import { Token } from '../../enterprise/entities/token.entity'
+import { Token } from '@/domain/sub-domains/enterprise/entities/token.entity'
 import { RefreshTokenNotExists } from '@/domain/errors/refesh-token-not-exists-error'
 
 dotenv.config({

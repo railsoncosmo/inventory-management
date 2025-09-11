@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CreateUserUseCase } from '@/domain/users/application/usecases/create-user.usecase'
+import { CreateUserUseCase } from '@/domain/sub-domains/application/usecases/user/create-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
 import { CreateUserInputDto } from '@/domain/dto/user/create-user.dto'
 import { createUserBodySchema } from '@/shared/validators/create-user-body-schema'

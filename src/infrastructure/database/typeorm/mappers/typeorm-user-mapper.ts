@@ -1,8 +1,8 @@
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 import { User as UserOrm } from '../entities/User'
-import { UniqueEntityId } from '@/domain/users/enterprise/value-objects/unique-entity-id'
-import { Email } from '@/domain/users/enterprise/value-objects/email.vo'
-import { Role } from '@/domain/users/enterprise/value-objects/role.vo'
+import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/unique-entity-id'
+import { Email } from '@/domain/sub-domains/enterprise/value-objects/email.vo'
+import { Role } from '@/domain/sub-domains/enterprise/value-objects/role.vo'
 import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 export class TypeormUserMapper {

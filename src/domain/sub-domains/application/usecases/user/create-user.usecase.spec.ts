@@ -3,7 +3,7 @@ import { mockUser } from '@/__test__/mocks/create-user.request.mock'
 import { FakeHasher } from '@/__test__/fakes/fake-hash'
 import { CreateUserUseCase } from './create-user.usecase'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 import { InvalidEmailError } from '@/domain/errors/invalid-email-error'
 
 let inMemoryUsersRepository: InMemoryUsersRepository

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { httpMethod, HttpMethod, Routes } from '../routes'
-import { GetProfileUsecase } from '@/domain/users/application/usecases/get-profile.usecase'
+import { GetProfileUsecase } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 import { authentication } from '@/infrastructure/http/middleware/auth'
 import { UnauthorizedError } from '@/domain/errors/unauthorized-error'
 

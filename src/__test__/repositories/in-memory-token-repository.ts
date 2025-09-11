@@ -1,5 +1,5 @@
-import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
-import { Token } from '@/domain/users/enterprise/entities/token.entity'
+import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
+import { Token } from '@/domain/sub-domains/enterprise/entities/token.entity'
 
 export class InMemoryTokenRepository implements TokenGateway {
   public token: Token[] = []

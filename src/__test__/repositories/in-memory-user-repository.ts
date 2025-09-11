@@ -1,5 +1,5 @@
-import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 

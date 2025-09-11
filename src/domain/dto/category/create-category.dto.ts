@@ -1,4 +1,4 @@
-import { Category } from "@/domain/users/enterprise/entities/category.entity"
+import { Category } from '@/domain/sub-domains/enterprise/entities/category.entity'
 
 export type CreateCategoryInputDto = {
   name: string

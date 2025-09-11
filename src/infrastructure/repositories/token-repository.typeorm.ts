@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm'
-import { Token } from '@/domain/users/enterprise/entities/token.entity'
-import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
+import { Token } from '@/domain/sub-domains/enterprise/entities/token.entity'
+import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
 import { Token as TokenOrm } from '@/infrastructure/database/typeorm/entities/Token'
 import { TypeormTokenMapper } from '../database/typeorm/mappers/typeorm-token-mapper'
 

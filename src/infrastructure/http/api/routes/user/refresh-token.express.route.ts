@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
-import { RefreshTokenUseCase } from '@/domain/users/application/usecases/refresh-token.usecase'
+import { RefreshTokenUseCase } from '@/domain/sub-domains/application/usecases/user/refresh-token.usecase'
 import { NotFoundError } from '@/domain/errors/not-found-error'
 import { RefreshTokenInputDto } from '@/domain/dto/user/token-user.dto'
 

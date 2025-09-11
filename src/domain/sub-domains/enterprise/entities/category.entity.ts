@@ -1,6 +1,6 @@
-import { Entity } from "@/core/entities/core.entity"
-import { Optional } from "@/core/types/optional"
-import { UniqueEntityId } from "@/domain/users/enterprise/value-objects/unique-entity-id"
+import { Entity } from '@/core/entities/core.entity'
+import { Optional } from '@/core/types/optional'
+import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/unique-entity-id'
 
 
 interface CategoryProps {

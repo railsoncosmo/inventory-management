@@ -1,5 +1,5 @@
-import { UseCase } from './usecase'
-import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
+import { UseCase } from '../usecase'
+import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
 import { TokenProvider } from '@/domain/ports/out/token'
 import { DateProvider } from '@/domain/ports/out/date'
 import { RefreshTokenInputDto } from '@/domain/dto/user/token-user.dto'

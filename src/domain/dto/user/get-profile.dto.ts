@@ -1,4 +1,4 @@
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 
 export interface GetProfileInputDto {
   user_id: string

@@ -1,18 +1,18 @@
-import { CreateUserUseCase } from '@/domain/users/application/usecases/create-user.usecase'
-import { AuthUserUseCase } from '@/domain/users/application/usecases/auth-user.usecase'
+import { CreateUserUseCase } from '@/domain/sub-domains/application/usecases/user/create-user.usecase'
+import { AuthUserUseCase } from '@/domain/sub-domains/application/usecases/user/auth-user.usecase'
 
 import { CreateUserRoute } from '@/infrastructure/http/api/routes/user/create-user.express.routes'
 import { AuthUserRoute } from '@/infrastructure/http/api/routes/user/auth-user.express.routes'
 
-import { UserGateway } from '@/domain/users/application/gateways/user.gateway'
-import { TokenGateway } from '@/domain/users/application/gateways/token.gateway'
+import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
+import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
 
 import { TokenProvider } from '@/domain/ports/out/token'
 import { DateProvider } from '@/domain/ports/out/date'
 import { Hashing } from '@/domain/ports/out/hasher'
 
 import { GetProfileUserRoute } from '@/infrastructure/http/api/routes/user/get-profile.express.route'
-import { GetProfileUsecase } from '@/domain/users/application/usecases/get-profile.usecase'
+import { GetProfileUsecase } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 
 interface UserComposer {
   repositories: { 

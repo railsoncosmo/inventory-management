@@ -1,6 +1,6 @@
 import { GetProfileInputDto, GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
-import { UseCase } from './usecase'
-import { UserGateway } from '../gateways/user.gateway'
+import { UseCase } from '../usecase'
+import { UserGateway } from '../../gateways/user.gateway'
 import { BadRequestError } from '@/domain/errors/bad-request-error'
 
 export class GetProfileUsecase implements UseCase<GetProfileInputDto, GetProfileOutputDto>{
