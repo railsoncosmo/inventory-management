@@ -1,5 +1,5 @@
 import { FakeHasher } from '../fakes/fake-hash'
-import { Token } from '@/domain/users/enterprise/entities/token.entity'
+import { Token } from '@/domain/sub-domains/enterprise/entities/token.entity'
 
 
 export async function makeToken(

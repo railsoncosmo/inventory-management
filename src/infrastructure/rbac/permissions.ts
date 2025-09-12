@@ -10,10 +10,9 @@ export const permissions: Record<Role, PermissionsByRole> = {
   admin: (_user, { can }) => {
     can('manage', 'all')
   },
-  user: (_user, { can, cannot }) => {
+  user: (_user, { can }) => {
     can('update', 'User')
     can(['create', 'read'], 'Product')
-    cannot('create', 'Category')
     can('read', 'Category')
     can('read', 'Inventory')
     can(['create', 'read'], 'Transaction')

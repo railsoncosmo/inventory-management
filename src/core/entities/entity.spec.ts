@@ -1,7 +1,7 @@
 import { Entity } from './core.entity'
-import { User } from '@/domain/users/enterprise/entities/user.entity'
-import { Email } from '@/domain/users/enterprise/value-objects/email.vo'
-import { Role } from '@/domain/users/enterprise/value-objects/role.vo'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
+import { Email } from '@/domain/sub-domains/enterprise/value-objects/email.vo'
+import { Role } from '@/domain/sub-domains/enterprise/value-objects/role.vo'
 import { mockUser } from '@/__test__/mocks/create-user.request.mock'
 
 describe (('Should create core entity'), () => {

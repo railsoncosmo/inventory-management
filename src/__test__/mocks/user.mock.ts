@@ -1,7 +1,7 @@
-import { Email } from '@/domain/users/enterprise/value-objects/email.vo'
+import { Email } from '@/domain/sub-domains/enterprise/value-objects/email.vo'
 import { FakeHasher } from '../fakes/fake-hash'
-import { Role } from '@/domain/users/enterprise/value-objects/role.vo'
-import { User } from '@/domain/users/enterprise/entities/user.entity'
+import { Role } from '@/domain/sub-domains/enterprise/value-objects/role.vo'
+import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 
 
 export async function makeUser(

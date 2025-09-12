@@ -32,8 +32,6 @@ export function defineAbilityFor(user: User){
 
   permissions[user.role](user, builder)
 
-  const ability = builder.build()
-
-  return ability
+  return builder.build()
 }
 

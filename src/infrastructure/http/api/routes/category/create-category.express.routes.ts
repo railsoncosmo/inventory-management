@@ -6,6 +6,8 @@ import { createCategoryBodySchema } from '@/shared/validators/create-category-bo
 import { CreateCategoryInputDto } from '@/domain/dto/category/create-category.dto'
 import { AuthenticatedUser } from '@/infrastructure/http/middleware/authenticate-user'
 import { UnauthorizedError } from '@/domain/errors/unauthorized-error'
+import { getUserPermission } from '@/utils/get-user-permission'
+import { Role } from '@/infrastructure/rbac/roles'
 
 export class CreateCategoryRoute implements Routes {
   private constructor(
@@ -44,7 +46,12 @@ export class CreateCategoryRoute implements Routes {
         const user = await this.authenticatedUser.getCurrentUser(req)
 
         if (!user || !user.id) {
-          throw new UnauthorizedError('Usuário não encontrado.')
+          throw new UnauthorizedError('Usuário não autenticado.')
+        }
+
+        const ability = getUserPermission(user.id, user.role as Role)
+        if(ability.cannot('create', 'Category')){
+          throw new UnauthorizedError('Você não tem permissão para acessar esta funcionalidade.')
         }
 
         const { name } = createCategoryBodySchema.parse(req.body)
