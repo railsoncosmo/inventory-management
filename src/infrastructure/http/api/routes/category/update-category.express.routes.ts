@@ -51,7 +51,7 @@ export class UpdateCategoryRoute implements Routes {
         }
 
         const ability = getUserPermission(user.id, user.role as Role)
-        if(ability.cannot('create', 'Category')){
+        if(ability.cannot('update', 'Category')){
           throw new UnauthorizedError('Você não tem permissão para acessar esta funcionalidade.')
         }
 
