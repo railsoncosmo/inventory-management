@@ -1,28 +1,28 @@
 import { NextFunction, Request, Response } from 'express'
-import { CreateCategoryRequest, CreateCategoryUseCase } from '@/domain/sub-domains/application/usecases/category/create-category.usecase'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
-import { CategoryAlreadyExistsError } from '@/domain/errors/category-already-exists-error'
 import { createCategoryBodySchema } from '@/shared/validators/create-category-body-schema'
 import { AuthenticatedUser } from '@/infrastructure/http/middleware/authenticate-user'
 import { UnauthorizedError } from '@/domain/errors/unauthorized-error'
 import { getUserPermission } from '@/utils/get-user-permission'
 import { Role } from '@/infrastructure/rbac/roles'
+import { UpdateCategoryRequest, UpdateCategoryUseCase } from '@/domain/sub-domains/application/usecases/category/update-category.usecase'
+import { NotFoundError } from '@/domain/errors/not-found-error'
 
-export class CreateCategoryRoute implements Routes {
+export class UpdateCategoryRoute implements Routes {
   private constructor(
     private readonly path: string,
     private readonly method: HttpMethod,
-    private readonly createCategoryUseCase: CreateCategoryUseCase,
+    private readonly updateCategoryUseCase: UpdateCategoryUseCase,
     private readonly authenticatedUser: AuthenticatedUser,
   ){}
 
-  public static create(createCategoryUseCase: CreateCategoryUseCase,
+  public static create(updateCategoryUseCase: UpdateCategoryUseCase,
     authenticatedUser: AuthenticatedUser
   ){
-    return new CreateCategoryRoute(
-      '/categories',
-      httpMethod.POST,
-      createCategoryUseCase,
+    return new UpdateCategoryRoute(
+      '/categories/:id',
+      httpMethod.PUT,
+      updateCategoryUseCase,
       authenticatedUser
     )
   }
@@ -42,6 +42,8 @@ export class CreateCategoryRoute implements Routes {
     return async (req: Request, res: Response) => {
 
       try {
+        const { id } = req.params
+        const { name } = createCategoryBodySchema.parse(req.body)
         const user = await this.authenticatedUser.getCurrentUser(req)
 
         if (!user || !user.id) {
@@ -53,16 +55,16 @@ export class CreateCategoryRoute implements Routes {
           throw new UnauthorizedError('Você não tem permissão para acessar esta funcionalidade.')
         }
 
-        const { name } = createCategoryBodySchema.parse(req.body)
-        const input: CreateCategoryRequest = {
-          name,
+        const input: UpdateCategoryRequest = {
+          id: id,
+          name: name,
         }
 
-        const category = await this.createCategoryUseCase.execute(input)
+        const category = await this.updateCategoryUseCase.execute(input)
 
-        res.status(201).json(category)
+        res.status(200).json(category.asPublic())
       } catch (error) {
-        if (error instanceof CategoryAlreadyExistsError) {
+        if (error instanceof NotFoundError) {
           res.status(409).json({ message: error.message })
         }
         throw error

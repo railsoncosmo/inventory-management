@@ -44,11 +44,13 @@ export class CategoryTypeormRepository implements CategoryGateway {
     }
   
     await this.categoryRepository.update(id, updated)
-    const user = await this.categoryRepository.findOne({ where: { id } })
-    if (!user) {
-      throw new NotFoundError('Categoria não encontrada.')
+    const category = await this.categoryRepository.findOne({ where: { id },
+      select: ['id' ,'name', 'displayName', 'created_at', 'updated_at']
+    })
+    if (!category) {
+      throw new NotFoundError('Categoria selecionada não encontrada.')
     }
-    return TypeormCategoryMapper.toDomain(user)
+    return TypeormCategoryMapper.toDomain(category)
   }
 
   async delete(id: string): Promise<void> {

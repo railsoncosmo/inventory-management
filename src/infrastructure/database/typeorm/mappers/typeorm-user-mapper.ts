@@ -3,7 +3,7 @@ import { User as UserOrm } from '../entities/User'
 import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/unique-entity-id'
 import { Email } from '@/domain/sub-domains/enterprise/value-objects/email.vo'
 import { Role } from '@/domain/sub-domains/enterprise/value-objects/role.vo'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
+import { GetProfileResponse } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 
 export class TypeormUserMapper {
   static toDomain(raw: UserOrm): User {
@@ -17,7 +17,7 @@ export class TypeormUserMapper {
     }, new UniqueEntityId(raw.id))
   }
 
-  static toUserPublic(raw: UserOrm): GetProfileOutputDto {
+  static toUserPublic(raw: UserOrm): GetProfileResponse {
     return {
       id: new UniqueEntityId(raw.id).toValue(),
       name: raw.name,

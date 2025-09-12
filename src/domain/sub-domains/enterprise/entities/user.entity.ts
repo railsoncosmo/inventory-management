@@ -2,7 +2,7 @@ import { Email } from '../value-objects/email.vo'
 import { Entity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '../value-objects/unique-entity-id'
 import { Role } from '../value-objects/role.vo'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
+import { GetProfileResponse } from '../../application/usecases/user/get-profile.usecase'
 
 interface UserProps {
   name: string
@@ -15,17 +15,22 @@ interface UserProps {
 
 export class User extends Entity<UserProps> {
   
-  public static create(props: UserProps, id?: UniqueEntityId){
+  public static create(
+    props: UserProps, 
+    id?: UniqueEntityId, 
+    created_at?: Date, 
+    updated_at?: Date
+  ){
     const user = new User({
       ...props,
       email: new Email(props.email.value),
       role: new Role(props.role.value),
-    }, id)
+    }, id, created_at, updated_at)
 
     return user
   }
 
-  public asPublic(): GetProfileOutputDto{
+  public asPublic(): GetProfileResponse {
     return {
       id: this.id,
       name: this.name,

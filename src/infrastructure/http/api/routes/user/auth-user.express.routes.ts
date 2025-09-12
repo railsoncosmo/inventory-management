@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
-import { AuthUserUseCase } from '@/domain/sub-domains/application/usecases/user/auth-user.usecase'
+import { AuthUserRequest, AuthUserUseCase } from '@/domain/sub-domains/application/usecases/user/auth-user.usecase'
 import { httpMethod, HttpMethod, Routes } from '@/infrastructure/http/api/routes/routes'
 import { authUserBodySchema } from '@/shared/validators/auth-user-body-schema'
-import { AuthUserInputDto } from '@/domain/dto/user/auth-user.dto'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
 
 export type CreateUserResponseDto = {
@@ -36,7 +35,7 @@ export class AuthUserRoute implements Routes {
 
       try {
         const { email, password } = authUserBodySchema.parse(req.body)
-        const input: AuthUserInputDto = {
+        const input: AuthUserRequest = {
           email,
           password,
         }

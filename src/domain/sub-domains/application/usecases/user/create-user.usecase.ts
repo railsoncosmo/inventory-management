@@ -3,11 +3,23 @@ import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
 import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
 import { UserAlreadyExistsError } from '@/domain/errors/user-already-exists-error'
 import { Hashing } from '@/domain/interfaces/hasher'
-import { CreateUserInputDto, CreateUserOutputDto } from '@/domain/dto/user/create-user.dto'
 import { Email } from '../../../enterprise/value-objects/email.vo'
 import { Role } from '../../../enterprise/value-objects/role.vo'
 
-export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUserOutputDto> {
+export interface CreateUserRequest {
+  name: string
+  email: string
+  password: string
+  image_url?: string
+  phone: string
+  role: 'admin' | 'user'
+}
+
+export interface CreateUserResponse {
+  user: User
+}
+
+export class CreateUserUseCase implements UseCase<CreateUserRequest, CreateUserResponse> {
   private constructor(
     private readonly userGateway: UserGateway,
     private readonly encrypter: Hashing,
@@ -23,7 +35,7 @@ export class CreateUserUseCase implements UseCase<CreateUserInputDto, CreateUser
     password,
     phone,
     role
-  }: CreateUserInputDto): Promise<CreateUserOutputDto>{
+  }: CreateUserRequest): Promise<CreateUserResponse>{
 
     const passwordHashed = await this.encrypter.hash(password)
 

@@ -4,8 +4,8 @@ import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gate
 import { User as UserOrm } from '../database/typeorm/entities/User'
 import { UserRole } from '@/enums/roles'
 import { TypeormUserMapper } from '../database/typeorm/mappers/typeorm-user-mapper'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 import { NotFoundError } from '@/domain/errors/not-found-error'
+import { GetProfileResponse } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 
 export class UserTypeormRepository implements UserGateway {
   constructor(private readonly userRepository: Repository<UserOrm>) {}
@@ -69,7 +69,7 @@ export class UserTypeormRepository implements UserGateway {
     await this.userRepository.delete(id)
   }
 
-  async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {
+  async getCurrentUser(user_id: string): Promise<GetProfileResponse | null> {
     const user = await this.userRepository.findOne({ where: { id: user_id },
       select: ['id' ,'name', 'email', 'phone', 'image_url', 'role', 'created_at']
     })

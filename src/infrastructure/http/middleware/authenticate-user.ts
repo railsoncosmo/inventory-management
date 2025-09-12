@@ -2,9 +2,8 @@ import { Request, Response,NextFunction } from 'express'
 import { env } from '@/config/env'
 import { verify, JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { ForbiddenError } from '@/domain/errors/forbidden-error'
-import { GetProfileUsecase } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
+import { GetProfileResponse, GetProfileUsecase } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 import { UnauthorizedError } from '@/domain/errors/unauthorized-error'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 
 interface Payload {
   sub: string
@@ -20,6 +19,7 @@ export class AuthenticatedUser {
 
   middleware() {
     return async (req: Request, res: Response, next: NextFunction) => {
+      
       try {
         if (!req.headers.authorization) {
           return res.status(401).json({ message: 'Credenciais inválidas.' })
@@ -49,7 +49,7 @@ export class AuthenticatedUser {
     }
   }
 
-  async getCurrentUser(req: Request): Promise<GetProfileOutputDto> {
+  async getCurrentUser(req: Request): Promise<GetProfileResponse> {
     if (!req.user_id) {
       throw new UnauthorizedError('Usuário não autenticado')
     }

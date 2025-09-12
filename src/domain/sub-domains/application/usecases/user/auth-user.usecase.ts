@@ -1,14 +1,23 @@
 import { UseCase } from '../usecase'
 import { TokenGateway } from '@/domain/sub-domains/application/gateways/token.gateway'
 import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
-import { AuthUserInputDto, AuthUserOutputDto } from '@/domain/dto/user/auth-user.dto'
 import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error'
 import { DateProvider } from '@/domain/interfaces/date'
 import { Hashing } from '@/domain/interfaces/hasher'
 import { TokenProvider } from '@/domain/interfaces/token'
 import { env } from '@/config/env'
 
-export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutputDto>{
+export interface AuthUserRequest {
+  email: string
+  password: string
+}
+
+export interface AuthUserResponse {
+  token: string
+  refresh_token?: string
+}
+
+export class AuthUserUseCase implements UseCase<AuthUserRequest, AuthUserResponse>{
   private constructor(
     private readonly userGateway: UserGateway,
     private readonly encrypter: Hashing,
@@ -33,7 +42,7 @@ export class AuthUserUseCase implements UseCase<AuthUserInputDto, AuthUserOutput
     )
   }
 
-  async execute({ email, password }: AuthUserInputDto): Promise<AuthUserOutputDto> {
+  async execute({ email, password }: AuthUserRequest): Promise<AuthUserResponse> {
 
     const user = await this.userGateway.findByEmail(email)
     if(!user){

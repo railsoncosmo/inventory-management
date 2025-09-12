@@ -1,7 +1,7 @@
 import { UserGateway } from '@/domain/sub-domains/application/gateways/user.gateway'
 import { User } from '@/domain/sub-domains/enterprise/entities/user.entity'
-import { GetProfileOutputDto } from '@/domain/dto/user/get-profile.dto'
 import { NotFoundError } from '@/domain/errors/not-found-error'
+import { GetProfileResponse } from '@/domain/sub-domains/application/usecases/user/get-profile.usecase'
 
 export class InMemoryUsersRepository implements UserGateway {
   public users: User[] = []
@@ -19,7 +19,7 @@ export class InMemoryUsersRepository implements UserGateway {
     return this.users.filter(doc => doc.email === email).length
   }
 
-  async getCurrentUser(user_id: string): Promise<GetProfileOutputDto | null> {
+  async getCurrentUser(user_id: string): Promise<GetProfileResponse | null> {
     const user = this.users.find(doc => doc.id.toString() === user_id)
     if(!user) return null
     return user.asPublic()
