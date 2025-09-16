@@ -1,6 +1,5 @@
 import { UseCase } from '../usecase'
 import { CategoryGateway } from '../../gateways/category.gateway'
-import { NotFoundError } from '@/domain/errors/not-found-error'
 import { Category } from '@/domain/sub-domains/enterprise/entities/category.entity'
 import { BadRequestError } from '@/domain/errors/bad-request-error'
 
@@ -22,7 +21,7 @@ export class UpdateCategoryUseCase implements UseCase<UpdateCategoryRequest, Upd
 
     const categoryAlreadyExists = await this.categoryGateway.findById(id)
     if(!categoryAlreadyExists){
-      throw new NotFoundError('Categoria selecionada não encontrada.')
+      throw new BadRequestError('Categoria não encontrada.')
     }
 
     if(categoryAlreadyExists.name === name){

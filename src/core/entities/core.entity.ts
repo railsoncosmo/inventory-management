@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/unique-entity-id'
 
-export class Entity<T> {
+export class CoreEntity<T> {
   private readonly _id: UniqueEntityId
   private readonly _created_at: Date
   private  _updated_at?: Date

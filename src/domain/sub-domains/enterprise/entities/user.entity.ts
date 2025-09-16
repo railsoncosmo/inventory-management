@@ -1,5 +1,5 @@
 import { Email } from '../value-objects/email.vo'
-import { Entity } from '@/core/entities/core.entity'
+import { CoreEntity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '../value-objects/unique-entity-id'
 import { Role } from '../value-objects/role.vo'
 import { GetProfileResponse } from '../../application/usecases/user/get-profile.usecase'
@@ -13,7 +13,7 @@ interface UserProps {
   image_url?: string
 }
 
-export class User extends Entity<UserProps> {
+export class User extends CoreEntity<UserProps> {
   
   public static create(
     props: UserProps, 

@@ -1,4 +1,4 @@
-import { Entity } from '@/core/entities/core.entity'
+import { CoreEntity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '../value-objects/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
@@ -9,7 +9,7 @@ interface TokenProps {
   created_at: Date
 }
 
-export class Token extends Entity<TokenProps> {
+export class Token extends CoreEntity<TokenProps> {
 
   public static create(props: Optional<TokenProps, 'created_at'>, id?: UniqueEntityId){
     const token = new Token({

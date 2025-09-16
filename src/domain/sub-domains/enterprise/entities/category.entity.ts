@@ -1,4 +1,4 @@
-import { Entity } from '@/core/entities/core.entity'
+import { CoreEntity } from '@/core/entities/core.entity'
 import { UniqueEntityId } from '@/domain/sub-domains/enterprise/value-objects/unique-entity-id'
 import { CreateCategoryResponse } from '../../application/usecases/category/create-category.usecase'
 
@@ -8,7 +8,7 @@ interface CategoryProps {
   displayName: string
 }
 
-export class Category extends Entity<CategoryProps>{
+export class Category extends CoreEntity<CategoryProps>{
 
   public static create(
     props: CategoryProps, 
